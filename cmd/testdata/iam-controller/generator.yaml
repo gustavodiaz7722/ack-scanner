@@ -1,0 +1,9 @@
+resources:
+  Role:
+    fields:
+      AssumeRolePolicyDocument:
+        is_iam_policy: true
+  Policy:
+    fields:
+      PolicyDocument:
+        is_document: true
