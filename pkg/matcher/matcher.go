@@ -17,23 +17,23 @@ type lookupKey struct {
 // Matcher cross-references ACK fields with Terraform fields.
 type Matcher struct{}
 
-// Match performs case-insensitive service matching and normalized field name
-// comparison (CamelCase to snake_case). It cross-references ACK scan results
-// with Terraform fields and classifies each field into one of four categories:
-//   - already_annotated: field already has is_document or is_iam_policy annotation
-//   - gap_confirmed_by_terraform: unannotated in ACK and confirmed as JSON in Terraform
-//   - gap_without_terraform_confirmation: unannotated in ACK but not found in Terraform
-//   - terraform_only: found in Terraform docs but not matched to any ACK field
+// Match cross-references ALL CRD string fields against Terraform's JSON field list.
+// Terraform is the source of truth for identifying document-string fields.
 //
-// When an exact field name match fails, it attempts a "similar field" match:
-// a Terraform field in the same service is considered a match if one field name
-// is a suffix of the other (e.g., ACK "AssumeRolePolicyDocument" contains TF
-// "assume_role_policy" as a prefix, or TF "policy" is a suffix of ACK "policy_document").
+// A CRD field appears in the report only if:
+//   - It matches a Terraform JSON field (confirmed gap or already annotated)
+//   - It was already annotated in generator.yaml (already_annotated — for completeness)
+//
+// Fields that don't match any Terraform JSON field AND aren't annotated are
+// regular strings and are excluded from the report.
+//
+// Categories:
+//   - gap_confirmed_by_terraform: unannotated in ACK, confirmed as JSON by Terraform
+//   - already_annotated: has is_document or is_iam_policy in generator.yaml
+//   - terraform_only: found in Terraform docs but no matching CRD field exists
 func (m *Matcher) Match(ackFields []types.ScanResult, tfFields []types.TerraformField) []types.MatchResult {
 	// Step 1: Build lookup structures from Terraform fields.
-	// Exact lookup: Key = (lowercase service name, normalized field name)
 	tfLookup := make(map[lookupKey]types.TerraformField, len(tfFields))
-	// Per-service list for similar-field matching
 	tfByService := make(map[string][]types.TerraformField)
 	for _, tf := range tfFields {
 		key := lookupKey{
@@ -59,40 +59,52 @@ func (m *Matcher) Match(ackFields []types.ScanResult, tfFields []types.Terraform
 			field:   normalizedField,
 		}
 
-		var category types.Category
-		var tfConfirmation types.TerraformConfirmation
-
 		if ack.AnnotationType != types.AnnotationNone {
-			// Field is already annotated
-			category = types.CategoryAnnotated
-			tfConfirmation = types.TFNotApplicable
-		} else {
-			// Field is unannotated — check if Terraform confirms it
+			// Field is already annotated — include it in report for completeness
+			results = append(results, types.MatchResult{
+				ServiceName:      ack.ServiceName,
+				ResourceName:     ack.ResourceName,
+				FieldName:        ack.FieldName,
+				FieldPath:        ack.FieldPath,
+				AnnotationStatus: ack.AnnotationType,
+				TFConfirmation:   types.TFNotApplicable,
+				Category:         types.CategoryAnnotated,
+			})
+			// Mark TF field as matched if there's a corresponding one
 			if _, found := tfLookup[key]; found {
-				// Exact match
-				category = types.CategoryGapConfirmed
-				tfConfirmation = types.TFConfirmed
 				matchedTFKeys[key] = true
 			} else if similarKey, found := findSimilarTFField(normalizedField, svc, tfByService[svc]); found {
-				// Similar field match (suffix/prefix containment)
-				category = types.CategoryGapConfirmed
-				tfConfirmation = types.TFConfirmed
 				matchedTFKeys[similarKey] = true
-			} else {
-				category = types.CategoryGapUnconfirmed
-				tfConfirmation = types.TFUnconfirmed
 			}
+		} else {
+			// Field is unannotated — only include if Terraform confirms it as JSON
+			if _, found := tfLookup[key]; found {
+				// Exact match with Terraform
+				results = append(results, types.MatchResult{
+					ServiceName:      ack.ServiceName,
+					ResourceName:     ack.ResourceName,
+					FieldName:        ack.FieldName,
+					FieldPath:        ack.FieldPath,
+					AnnotationStatus: types.AnnotationNone,
+					TFConfirmation:   types.TFConfirmed,
+					Category:         types.CategoryGapConfirmed,
+				})
+				matchedTFKeys[key] = true
+			} else if similarKey, found := findSimilarTFField(normalizedField, svc, tfByService[svc]); found {
+				// Similar field match with Terraform
+				results = append(results, types.MatchResult{
+					ServiceName:      ack.ServiceName,
+					ResourceName:     ack.ResourceName,
+					FieldName:        ack.FieldName,
+					FieldPath:        ack.FieldPath,
+					AnnotationStatus: types.AnnotationNone,
+					TFConfirmation:   types.TFConfirmed,
+					Category:         types.CategoryGapConfirmed,
+				})
+				matchedTFKeys[similarKey] = true
+			}
+			// If no Terraform match: skip this field entirely (it's just a regular string)
 		}
-
-		results = append(results, types.MatchResult{
-			ServiceName:      ack.ServiceName,
-			ResourceName:     ack.ResourceName,
-			FieldName:        ack.FieldName,
-			FieldPath:        ack.FieldPath,
-			AnnotationStatus: ack.AnnotationType,
-			TFConfirmation:   tfConfirmation,
-			Category:         category,
-		})
 	}
 
 	// Step 3: Add Terraform-only fields (not matched to any ACK field)
@@ -101,32 +113,33 @@ func (m *Matcher) Match(ackFields []types.ScanResult, tfFields []types.Terraform
 			service: strings.ToLower(tf.ServiceName),
 			field:   NormalizeFieldName(tf.FieldName),
 		}
-		if !matchedTFKeys[key] {
-			// Check if any ACK field (regardless of annotation) matched this TF field
-			ackMatched := false
-			svc := strings.ToLower(tf.ServiceName)
-			tfNorm := NormalizeFieldName(tf.FieldName)
-			for _, ack := range ackFields {
-				if strings.ToLower(ack.ServiceName) != svc {
-					continue
-				}
-				ackNorm := NormalizeFieldName(ack.FieldName)
-				if ackNorm == tfNorm || isSimilarField(ackNorm, tfNorm) {
-					ackMatched = true
-					break
-				}
+		if matchedTFKeys[key] {
+			continue
+		}
+		// Check if any ACK field matched this TF field via similar-field logic
+		svc := strings.ToLower(tf.ServiceName)
+		tfNorm := NormalizeFieldName(tf.FieldName)
+		ackMatched := false
+		for _, ack := range ackFields {
+			if strings.ToLower(ack.ServiceName) != svc {
+				continue
 			}
-			if !ackMatched {
-				results = append(results, types.MatchResult{
-					ServiceName:      tf.ServiceName,
-					ResourceName:     tf.ResourceType,
-					FieldName:        tf.FieldName,
-					FieldPath:        "",
-					AnnotationStatus: types.AnnotationNone,
-					TFConfirmation:   types.TFNotApplicable,
-					Category:         types.CategoryTerraformOnly,
-				})
+			ackNorm := NormalizeFieldName(ack.FieldName)
+			if ackNorm == tfNorm || isSimilarField(ackNorm, tfNorm) {
+				ackMatched = true
+				break
 			}
+		}
+		if !ackMatched {
+			results = append(results, types.MatchResult{
+				ServiceName:      tf.ServiceName,
+				ResourceName:     tf.ResourceType,
+				FieldName:        tf.FieldName,
+				FieldPath:        "",
+				AnnotationStatus: types.AnnotationNone,
+				TFConfirmation:   types.TFNotApplicable,
+				Category:         types.CategoryTerraformOnly,
+			})
 		}
 	}
 

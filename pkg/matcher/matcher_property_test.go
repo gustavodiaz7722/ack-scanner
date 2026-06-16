@@ -111,8 +111,8 @@ func genScanResultWithService(service string) *rapid.Generator[types.ScanResult]
 
 // TestProperty8_FieldAnnotationClassification verifies that for any set of identified
 // document-string fields and a generator config, a field is classified as "annotated"
-// if and only if the generator config contains is_document or is_iam_policy for that field,
-// and "unannotated" otherwise.
+// if and only if the generator config contains is_document or is_iam_policy for that field.
+// Unannotated fields without TF confirmation are excluded from results.
 func TestProperty8_FieldAnnotationClassification(t *testing.T) {
 	// Feature: ack-scanner, Property 8: Field annotation classification
 	rapid.Check(t, func(t *rapid.T) {
@@ -124,38 +124,27 @@ func TestProperty8_FieldAnnotationClassification(t *testing.T) {
 		}
 
 		m := &Matcher{}
-		// Match with empty TF fields so we only test annotation classification
+		// Match with empty TF fields — only annotated fields should appear
 		results := m.Match(ackFields, nil)
 
-		// Verify each ACK field's classification
-		for i, ack := range ackFields {
-			if i >= len(results) {
-				t.Fatalf("expected at least %d results, got %d", i+1, len(results))
-			}
-			result := results[i]
-
+		// Count expected annotated fields
+		expectedAnnotated := 0
+		for _, ack := range ackFields {
 			if ack.AnnotationType != types.AnnotationNone {
-				// Field is annotated → should be classified as already_annotated
-				if result.Category != types.CategoryAnnotated {
-					t.Fatalf("field %q with annotation %q should be categorized as %q, got %q",
-						ack.FieldName, ack.AnnotationType,
-						types.CategoryAnnotated, result.Category)
-				}
-				if result.AnnotationStatus != ack.AnnotationType {
-					t.Fatalf("field %q annotation status should be %q, got %q",
-						ack.FieldName, ack.AnnotationType, result.AnnotationStatus)
-				}
-			} else {
-				// Field is unannotated → should be gap (confirmed or unconfirmed)
-				// Since we passed no TF fields, it should be gap_without_terraform_confirmation
-				if result.Category != types.CategoryGapUnconfirmed {
-					t.Fatalf("unannotated field %q with no TF fields should be %q, got %q",
-						ack.FieldName, types.CategoryGapUnconfirmed, result.Category)
-				}
-				if result.AnnotationStatus != types.AnnotationNone {
-					t.Fatalf("unannotated field %q should have annotation_status 'none', got %q",
-						ack.FieldName, result.AnnotationStatus)
-				}
+				expectedAnnotated++
+			}
+		}
+
+		if len(results) != expectedAnnotated {
+			t.Fatalf("expected %d annotated results (no TF = no unannotated results), got %d",
+				expectedAnnotated, len(results))
+		}
+
+		// Verify all results are annotated
+		for _, result := range results {
+			if result.Category != types.CategoryAnnotated {
+				t.Fatalf("with no TF fields, all results should be annotated, got %q for %q",
+					result.Category, result.FieldName)
 			}
 		}
 	})
@@ -430,6 +419,7 @@ func TestProperty14_CategoryAssignmentDeterminism(t *testing.T) {
 // Terraform match get gap_without_terraform_confirmation category.
 func TestProperty14_UnannotatedWithoutTFMatch(t *testing.T) {
 	// Feature: ack-scanner, Property 14: Category assignment determinism
+	// Unannotated fields without a TF match are now excluded from results entirely.
 	rapid.Check(t, func(t *rapid.T) {
 		service := genServiceName().Draw(t, "service")
 		field := genFieldName().Draw(t, "field")
@@ -461,24 +451,11 @@ func TestProperty14_UnannotatedWithoutTFMatch(t *testing.T) {
 		m := &Matcher{}
 		results := m.Match(ackFields, tfFields)
 
-		// Find the ACK field result
-		var ackResult *types.MatchResult
-		for i, r := range results {
+		// The ACK field should NOT appear — it's unannotated with no TF match
+		for _, r := range results {
 			if r.FieldName == field && strings.EqualFold(r.ServiceName, service) {
-				ackResult = &results[i]
-				break
+				t.Fatalf("unannotated field %q without TF match should not appear in results", field)
 			}
-		}
-		if ackResult == nil {
-			t.Fatalf("ACK field %q not found in results", field)
-		}
-		if ackResult.Category != types.CategoryGapUnconfirmed {
-			t.Fatalf("unannotated + TF-unmatched: expected %q, got %q",
-				types.CategoryGapUnconfirmed, ackResult.Category)
-		}
-		if ackResult.TFConfirmation != types.TFUnconfirmed {
-			t.Fatalf("unannotated + TF-unmatched: expected TFConfirmation=%q, got %q",
-				types.TFUnconfirmed, ackResult.TFConfirmation)
 		}
 	})
 }

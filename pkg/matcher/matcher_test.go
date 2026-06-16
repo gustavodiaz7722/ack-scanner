@@ -58,8 +58,10 @@ func TestMatch_CategoryAssignment(t *testing.T) {
 
 	results := m.Match(ackFields, tfFields)
 
-	if len(results) != 4 {
-		t.Fatalf("expected 4 results, got %d", len(results))
+	// Expected: 3 results (annotated IAM, confirmed SNS, terraform-only lambda)
+	// EKS ConfigurationValues is excluded — no TF match and not annotated
+	if len(results) != 3 {
+		t.Fatalf("expected 3 results, got %d: %+v", len(results), results)
 	}
 
 	// Verify category assignments
@@ -78,14 +80,14 @@ func TestMatch_CategoryAssignment(t *testing.T) {
 		t.Errorf("sns/FilterPolicy: expected %s, got %s", types.CategoryGapConfirmed, cat)
 	}
 
-	// EKS ConfigurationValues is unannotated and NOT in Terraform → gap_without_terraform
-	if cat := categoryMap["eks/ConfigurationValues"]; cat != types.CategoryGapUnconfirmed {
-		t.Errorf("eks/ConfigurationValues: expected %s, got %s", types.CategoryGapUnconfirmed, cat)
-	}
-
 	// Lambda policy is in Terraform but not in ACK → terraform_only
 	if cat := categoryMap["lambda/policy"]; cat != types.CategoryTerraformOnly {
 		t.Errorf("lambda/policy: expected %s, got %s", types.CategoryTerraformOnly, cat)
+	}
+
+	// EKS ConfigurationValues should NOT appear (no TF match, not annotated)
+	if _, exists := categoryMap["eks/ConfigurationValues"]; exists {
+		t.Error("eks/ConfigurationValues should not appear — no TF match and not annotated")
 	}
 }
 
@@ -149,9 +151,9 @@ func TestMatch_TFConfirmation(t *testing.T) {
 		t.Errorf("sns/FilterPolicy: expected %s, got %s", types.TFConfirmed, tf)
 	}
 
-	// Unannotated + not found in TF → unconfirmed
-	if tf := confirmationMap["eks/ConfigurationValues"]; tf != types.TFUnconfirmed {
-		t.Errorf("eks/ConfigurationValues: expected %s, got %s", types.TFUnconfirmed, tf)
+	// Unannotated + not found in TF → excluded from results
+	if _, exists := confirmationMap["eks/ConfigurationValues"]; exists {
+		t.Error("eks/ConfigurationValues should not appear — no TF match and not annotated")
 	}
 }
 
@@ -269,7 +271,7 @@ func TestMatch_EmptyInputs(t *testing.T) {
 		t.Errorf("expected terraform_only, got %s", results[0].Category)
 	}
 
-	// Some ACK, empty TF
+	// Some ACK, empty TF — unannotated fields with no TF match are excluded
 	ackFields := []types.ScanResult{
 		{
 			ServiceName:    "iam",
@@ -282,11 +284,28 @@ func TestMatch_EmptyInputs(t *testing.T) {
 		},
 	}
 	results = m.Match(ackFields, nil)
-	if len(results) != 1 {
-		t.Fatalf("expected 1 result, got %d", len(results))
+	if len(results) != 0 {
+		t.Fatalf("expected 0 results (no TF to confirm, not annotated), got %d", len(results))
 	}
-	if results[0].Category != types.CategoryGapUnconfirmed {
-		t.Errorf("expected gap_without_terraform_confirmation, got %s", results[0].Category)
+
+	// Annotated ACK field with empty TF should still appear
+	ackFieldsAnnotated := []types.ScanResult{
+		{
+			ServiceName:    "iam",
+			RepoName:       "iam-controller",
+			ResourceName:   "Role",
+			FieldName:      "PolicyDocument",
+			FieldPath:      "Spec.PolicyDocument",
+			GoType:         "*string",
+			AnnotationType: types.AnnotationDocument,
+		},
+	}
+	results = m.Match(ackFieldsAnnotated, nil)
+	if len(results) != 1 {
+		t.Fatalf("expected 1 annotated result, got %d", len(results))
+	}
+	if results[0].Category != types.CategoryAnnotated {
+		t.Errorf("expected already_annotated, got %s", results[0].Category)
 	}
 }
 

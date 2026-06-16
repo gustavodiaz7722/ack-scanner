@@ -1,0 +1,3859 @@
+[
+  {
+    "service_name": "acmpca",
+    "resource_type": "certificate_authority",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "acmpca",
+    "resource_type": "policy",
+    "field_name": "policy",
+    "description": "JSON-formatted IAM policy to attach to the specified private CA resource.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "amplify",
+    "resource_type": "branch",
+    "field_name": "event_pattern",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "amplify",
+    "resource_type": "branch",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_account",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_account",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_authorizer",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_authorizer",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_deployment",
+    "field_name": "body",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_documentation_part",
+    "field_name": "properties",
+    "description": "Content map of API-specific key-value pairs describing the targeted API entity. The map must be encoded as a JSON string, e.g., \"{ \\\"description\\\": \\\"The API does ...\\\" }\". Only Swagger-compliant key-value pairs can be exported and, hence, published.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_domain_name",
+    "field_name": "policy",
+    "description": "A stringified JSON policy document that applies to the execute-api service for this DomainName regardless of the caller and Method configuration. Supported only for private custom domain names.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_integration",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_method_response",
+    "field_name": "schema",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_method_settings",
+    "field_name": "body",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_model",
+    "field_name": "schema",
+    "description": "Schema of the model in a JSON form",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_rest_api",
+    "field_name": "policy",
+    "description": "JSON formatted policy document that controls access to the API Gateway. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy). Terraform will only perform drift detection of its value when present in a configuration. We recommend using the [`aws_api_gateway_rest_api_policy` resource](/docs/providers/aws/r/api_gateway_rest_api_policy.html) instead. If importing an OpenAPI specification via the `body` argument, this corresponds to the [`x-amazon-apigateway-policy` extension](https://docs.aws.amazon.com/apigateway/latest/developerguide/openapi-extensions-policy.html). If the argument value is provided and is different than the OpenAPI value, the argument value will override the OpenAPI value.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_rest_api",
+    "field_name": "body",
+    "description": "OpenAPI specification that defines the set of routes and integrations to create as part of the REST API. This configuration, and any updates to it, will replace all REST API configuration except values overridden in this resource configuration and other resource updates applied after this resource but before any `aws_api_gateway_deployment` creation. More information about REST API OpenAPI support can be found in the [API Gateway Developer Guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-import-api.html).",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_rest_api_policy",
+    "field_name": "policy",
+    "description": "JSON formatted policy document that controls access to the API Gateway. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy)",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_rest_api_put",
+    "field_name": "body",
+    "description": "PUT request body containing external API definitions. Currently, only OpenAPI definition JSON/YAML files are supported. The maximum size of the API definition file is 6MB.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_stage",
+    "field_name": "body",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "api",
+    "resource_type": "gateway_usage_plan",
+    "field_name": "body",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "apigatewayv2",
+    "resource_type": "authorizer",
+    "field_name": "issuer",
+    "description": "Base domain of the identity provider that issues JSON Web Tokens, such as the `endpoint` attribute of the [`aws_cognito_user_pool`](/docs/providers/aws/r/cognito_user_pool.html) resource.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "apigatewayv2",
+    "resource_type": "model",
+    "field_name": "schema",
+    "description": "Schema for the model. This should be a [JSON schema draft 4](https://tools.ietf.org/html/draft-zyp-json-schema-04) model. Must be less than or equal to 32768 characters in length.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "apigatewayv2",
+    "resource_type": "model",
+    "field_name": "content_type",
+    "description": "The content-type for the model, for example, `application/json`. Must be between 1 and 256 characters in length.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appconfig",
+    "resource_type": "configuration_profile",
+    "field_name": "type",
+    "description": "Type of validator. Valid values: `JSON_SCHEMA` and `LAMBDA`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appconfig",
+    "resource_type": "extension",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "appconfig",
+    "resource_type": "extension_association",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "appconfig",
+    "resource_type": "hosted_configuration_version",
+    "field_name": "content",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "appfabric",
+    "resource_type": "ingestion_destination",
+    "field_name": "format",
+    "description": "The format in which the audit logs need to be formatted. Valid values: `json`, `parquet`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appflow",
+    "resource_type": "connector_profile",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "appflow",
+    "resource_type": "flow",
+    "field_name": "file_type",
+    "description": "File type that Amazon AppFlow places in the Upsolver Amazon S3 bucket. Valid values are `CSV`, `JSON`, and `PARQUET`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appflow",
+    "resource_type": "flow",
+    "field_name": "s3_input_file_type",
+    "description": "File type that Amazon AppFlow gets from your Amazon S3 bucket. Valid values are `CSV` and `JSON`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appflow",
+    "resource_type": "flow",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "applicationinsights",
+    "resource_type": "application",
+    "field_name": "query",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "appmesh",
+    "resource_type": "virtual_gateway",
+    "field_name": "json",
+    "description": "The logging format for JSON. See [`json` Block](#json-block) for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appmesh",
+    "resource_type": "virtual_gateway",
+    "field_name": "key",
+    "description": "The specified key for the JSON. Must be between 1 and 100 characters in length.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appmesh",
+    "resource_type": "virtual_gateway",
+    "field_name": "value",
+    "description": "The specified value for the JSON. Must be between 1 and 100 characters in length.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appmesh",
+    "resource_type": "virtual_node",
+    "field_name": "key",
+    "description": "The specified key for the JSON. Must be between 1 and 100 characters in length.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appmesh",
+    "resource_type": "virtual_node",
+    "field_name": "value",
+    "description": "The specified value for the JSON. Must be between 1 and 100 characters in length.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appmesh",
+    "resource_type": "virtual_node",
+    "field_name": "json",
+    "description": "The logging format for JSON. See [`json` Block](#json-block) for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "appsync",
+    "resource_type": "datasource",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "appsync",
+    "resource_type": "datasource",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "appsync",
+    "resource_type": "graphql_api",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "appsync",
+    "resource_type": "type",
+    "field_name": "format",
+    "description": "The type format: `SDL` or `JSON`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "arcregionswitch",
+    "resource_type": "plan",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "autoscaling",
+    "resource_type": "group",
+    "field_name": "notification_metadata",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "autoscaling",
+    "resource_type": "lifecycle_hook",
+    "field_name": "notification_metadata",
+    "description": "Contains additional information that you want to include any time Auto Scaling sends a message to the notification target.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "backup",
+    "resource_type": "report_plan",
+    "field_name": "formats",
+    "description": "A list of the format of your reports: CSV, JSON, or both. If not specified, the default format is CSV.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "backup",
+    "resource_type": "selection",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "backup",
+    "resource_type": "vault_notifications",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "backup",
+    "resource_type": "vault_policy",
+    "field_name": "policy",
+    "description": "The backup vault access policy document in JSON format.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "batch",
+    "resource_type": "compute_environment",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "batch",
+    "resource_type": "job_definition",
+    "field_name": "container_properties",
+    "description": "Valid [container properties](http://docs.aws.amazon.com/batch/latest/APIReference/API_RegisterJobDefinition.html) provided as a single valid JSON document. This parameter is only valid if the `type` parameter is `container`.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "batch",
+    "resource_type": "job_definition",
+    "field_name": "ecs_properties",
+    "description": "Valid [ECS properties](http://docs.aws.amazon.com/batch/latest/APIReference/API_RegisterJobDefinition.html) provided as a single valid JSON document. This parameter is only valid if the `type` parameter is `container`.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "batch",
+    "resource_type": "job_definition",
+    "field_name": "node_properties",
+    "description": "Valid [node properties](http://docs.aws.amazon.com/batch/latest/APIReference/API_RegisterJobDefinition.html) provided as a single valid JSON document. This parameter is required if the `type` parameter is `multinode`.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "batch",
+    "resource_type": "job_definition",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "agent",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "agent",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "agent_action_group",
+    "field_name": "payload",
+    "description": "JSON or YAML-formatted payload defining the OpenAPI schema for the action group.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "agent_action_group",
+    "field_name": "api_schema",
+    "description": "Either details about the S3 object containing the OpenAPI schema for the action group or the JSON or YAML-formatted payload defining the schema. For more information, see [Action group OpenAPI schemas](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html). See [`api_schema` Block](#api_schema-block) for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "agent_alias",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "agent_alias",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "agent_collaborator",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "agent_collaborator",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "flow",
+    "field_name": "json",
+    "description": "A JSON object defining the input schema for the tool.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "bedrockagent",
+    "resource_type": "prompt",
+    "field_name": "json",
+    "description": "A JSON object defining the input schema for the tool.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "agent_runtime",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "agent_runtime",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "browser",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "code_interpreter",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "gateway",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "gateway_target",
+    "field_name": "items_json",
+    "description": "JSON-encoded schema definition for array items. Used for complex nested structures. Cannot be used with `properties_json`.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "gateway_target",
+    "field_name": "properties_json",
+    "description": "JSON-encoded schema definition for object properties. Used for complex nested structures. Cannot be used with `items_json`.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "gateway_target",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "harness",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "harness",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "harness",
+    "field_name": "input_schema",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "memory",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "online_evaluation_config",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "bedrockagentcore",
+    "resource_type": "resource_policy",
+    "field_name": "policy",
+    "description": "Resource policy definition",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "budgets",
+    "resource_type": "budget_action",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "budgets",
+    "resource_type": "budget_action",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ce",
+    "resource_type": "anomaly_monitor",
+    "field_name": "monitor_specification",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ce",
+    "resource_type": "anomaly_subscription",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "chime",
+    "resource_type": "voice_connector_streaming",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "chimesdkmediapipelines",
+    "resource_type": "media_insights_pipeline_configuration",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudcontrolapi",
+    "resource_type": "resource",
+    "field_name": "desired_state",
+    "description": "JSON string matching the CloudFormation resource type schema with desired configuration. Terraform configuration expressions can be converted into JSON using the [`jsonencode()` function](https://www.terraform.io/docs/language/functions/jsonencode.html).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "cloudcontrolapi",
+    "resource_type": "resource",
+    "field_name": "schema",
+    "description": "JSON string of the CloudFormation resource type schema which is used for plan time validation where possible. Automatically fetched if not provided. In large scale environments with multiple resources using the same `type_name`, it is recommended to fetch the schema once via the [`aws_cloudformation_type` data source](/docs/providers/aws/d/cloudformation_type.html) and use this argument to reduce `DescribeType` API operation throttling. This value is marked sensitive only to prevent large plan differences from showing.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudformation",
+    "resource_type": "stack",
+    "field_name": "template_body",
+    "description": "Structure containing the template body (max size: 51,200 bytes).",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudformation",
+    "resource_type": "stack_instances",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudformation",
+    "resource_type": "stack_instances",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudformation",
+    "resource_type": "stack_set",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudformation",
+    "resource_type": "stack_set",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudformation",
+    "resource_type": "stack_set",
+    "field_name": "template_body",
+    "description": "String containing the CloudFormation template body. Maximum size: 51,200 bytes. Conflicts with `template_url`.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudformation",
+    "resource_type": "stack_set_instance",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudformation",
+    "resource_type": "stack_set_instance",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudfront",
+    "resource_type": "distribution",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudfront",
+    "resource_type": "origin_access_identity",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudfront",
+    "resource_type": "realtime_log_config",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudfront",
+    "resource_type": "realtime_log_config",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudsearch",
+    "resource_type": "domain_service_access_policy",
+    "field_name": "access_policy",
+    "description": "The access rules you want to configure. These rules replace any existing rules. See the [AWS documentation](https://docs.aws.amazon.com/cloudsearch/latest/developerguide/configuring-access.html) for details.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudtrail",
+    "resource_type": "",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "contributor_insight_rule",
+    "field_name": "rule_definition",
+    "description": "Definition of the rule, as a JSON object. For details on the valid syntax, see [Contributor Insights Rule Syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContributorInsights-RuleSyntax.html).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "dashboard",
+    "field_name": "dashboard_body",
+    "description": "The detailed information about the dashboard, including what widgets are included and their location on the dashboard. You can read more about the body structure in the [documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/CloudWatch-Dashboard-Body-Structure.html).",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_archive",
+    "field_name": "event_pattern",
+    "description": "Event pattern to use to filter events sent to the archive. By default, it attempts to archive every event received in the `event_source_arn`.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_archive",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_bus",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_bus",
+    "field_name": "policy_document",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_bus_policy",
+    "field_name": "policy",
+    "description": "The text of the policy. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_connection",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_rule",
+    "field_name": "event_pattern",
+    "description": "The event pattern described a JSON object. At least one of `schedule_expression` or `event_pattern` is required. See full documentation of [Events and Event Patterns in EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-and-event-patterns.html) for details. **Note**: The event pattern size is 2048 by default but it is adjustable up to 4096 characters by submitting a service quota increase request. See [Amazon EventBridge quotas](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-quota.html) for details.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_rule",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "policy_document",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "input_template",
+    "description": "Template to customize data sent to the target. Must be valid JSON. To send a string value, the string value must include double quotes. Values must be escaped for both JSON and Terraform, e.g., `\"\\\"Your string goes here.\\\\nA new line.\\\"\"`",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "input_paths",
+    "description": "Key value pairs specified in the form of JSONPath (for example, time = $.time)",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "partition_key_path",
+    "description": "The JSON path to be extracted from the event and used as the partition key.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "input",
+    "description": "Valid JSON text passed to the target. Conflicts with `input_path` and `input_transformer`.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "input_path",
+    "description": "The value of the [JSONPath](http://goessner.net/articles/JsonPath/) that is used for extracting part of the matched event when passing it to the target. Conflicts with `input` and `input_transformer`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "event_pattern",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "event_target",
+    "field_name": "content",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_account_policy",
+    "field_name": "policy_document",
+    "description": "Text of the account policy. Refer to the [AWS docs](https://docs.aws.amazon.com/cli/latest/reference/logs/put-account-policy.html) for more information.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_data_protection_policy",
+    "field_name": "policy_document",
+    "description": "Specifies the data protection policy in JSON. Read more at [Data protection policy syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data-start.html#mask-sensitive-log-data-policysyntax).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_delivery_destination",
+    "field_name": "output_format",
+    "description": "The format of the logs that are sent to this delivery destination. Valid values: `json`, `plain`, `w3c`, `raw`, `parquet`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_delivery_destination_policy",
+    "field_name": "delivery_destination_policy",
+    "description": "The contents of the policy.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_destination_policy",
+    "field_name": "access_policy",
+    "description": "The policy document. This is a JSON formatted string.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_index_policy",
+    "field_name": "policy_document",
+    "description": "JSON policy document. This is a JSON formatted string.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_resource_policy",
+    "field_name": "policy_document",
+    "description": "Details of the resource policy, including the identity of the principal that is enabled to put logs to this account. This is formatted as a JSON string. Maximum length of 5120 characters.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_transformer",
+    "field_name": "parse_route53",
+    "description": "Parses Route 53 vended logs, extracts fields, and converts them into JSON format. See [`parse_route53`](#parse_route53-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_transformer",
+    "field_name": "parse_vpc",
+    "description": "Parses Amazon VPC vended logs, extracts fields, and converts them into JSON format. See [`parse_vpc`](#parse_vpc-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_transformer",
+    "field_name": "parse_waf",
+    "description": "Parses AWS WAF vended logs, extracts fields, and converts them into JSON format. See [`parse_waf`](#parse_waf-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_transformer",
+    "field_name": "target",
+    "description": "Specifies the JSON field to store the result in.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_transformer",
+    "field_name": "parse_cloudfront",
+    "description": "Parses CloudFront vended logs, extracts fields, and converts them into JSON format. See [`parse_cloudfront`](#parse_cloudfront-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_transformer",
+    "field_name": "parse_json",
+    "description": "Parses log events that are in JSON format. See [`parse_json`](#parse_json-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "log_transformer",
+    "field_name": "parse_postgres",
+    "description": "Parses RDS for PostgreSQL vended logs, extracts fields, and and convert them into a JSON format. See [`parse_postgres`](#parse_postgres-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "metric_stream",
+    "field_name": "output_format",
+    "description": "Output format for the stream. Possible values are `json`, `opentelemetry0.7`, and `opentelemetry1.0`. For more information about output formats, see [Metric streams output formats](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-formats.html).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "metric_stream",
+    "field_name": "statistics_configuration",
+    "description": "For each entry in this array, you specify one or more metrics and the list of additional statistics to stream for those metrics. The additional statistics that you can stream depend on the stream's `output_format`. If the OutputFormat is `json`, you can stream any additional statistic that is supported by CloudWatch, listed in [CloudWatch statistics definitions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html.html). If the OutputFormat is `opentelemetry0.7` or `opentelemetry1.0`, you can stream percentile statistics (p99 etc.). See details below.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "metric_stream",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cloudwatch",
+    "resource_type": "metric_stream",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "codeartifact",
+    "resource_type": "domain_permissions_policy",
+    "field_name": "policy_document",
+    "description": "A JSON policy string to be set as the access control resource policy on the provided domain.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "codeartifact",
+    "resource_type": "repository_permissions_policy",
+    "field_name": "policy_document",
+    "description": "A JSON policy string to be set as the access control resource policy on the provided domain.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "codebuild",
+    "resource_type": "project",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "codebuild",
+    "resource_type": "project",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "codebuild",
+    "resource_type": "report_group",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "codebuild",
+    "resource_type": "resource_policy",
+    "field_name": "policy",
+    "description": "A JSON-formatted resource policy. For more information, see [Sharing a Projec](https://docs.aws.amazon.com/codebuild/latest/userguide/project-sharing.html#project-sharing-share) and [Sharing a Report Group](https://docs.aws.amazon.com/codebuild/latest/userguide/report-groups-sharing.html#report-groups-sharing-share).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "codecommit",
+    "resource_type": "approval_rule_template",
+    "field_name": "content",
+    "description": "The content of the approval rule template. Maximum of 3000 characters.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "codedeploy",
+    "resource_type": "deployment_group",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "codepipeline",
+    "resource_type": "",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "codepipeline",
+    "resource_type": "",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "codepipeline",
+    "resource_type": "webhook",
+    "field_name": "json_path",
+    "description": "The [JSON path](https://github.com/json-path/JsonPath) to filter on.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "codestarnotifications",
+    "resource_type": "notification_rule",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cognito",
+    "resource_type": "identity_pool_roles_attachment",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cognito",
+    "resource_type": "identity_pool_roles_attachment",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cognito",
+    "resource_type": "log_delivery_configuration",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cognito",
+    "resource_type": "log_delivery_configuration",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cognito",
+    "resource_type": "managed_login_branding",
+    "field_name": "settings",
+    "description": "JSON document with the the settings to apply to the style.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "cognito",
+    "resource_type": "managed_user_pool_client",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cognito",
+    "resource_type": "user_group",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cognito",
+    "resource_type": "user_pool_client",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "cognito",
+    "resource_type": "user_pool_client",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "comprehend",
+    "resource_type": "document_classifier",
+    "field_name": "attribute_names",
+    "description": "The JSON attribute that contains the annotations for the training documents.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "comprehend",
+    "resource_type": "entity_recognizer",
+    "field_name": "attribute_names",
+    "description": "The JSON attribute that contains the annotations for the training documents.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "config_rule",
+    "field_name": "input_parameters",
+    "description": "A string in JSON format that is passed to the AWS Config rule Lambda function.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "config_rule",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "config_rule",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "configuration_aggregator",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "configuration_recorder",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "configuration_recorder_status",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "configuration_recorder_status",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "delivery_channel",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "delivery_channel",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "organization_custom_policy_rule",
+    "field_name": "input_parameters",
+    "description": "A string in JSON format that is passed to the AWS Config Rule Lambda Function.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "organization_custom_rule",
+    "field_name": "input_parameters",
+    "description": "A string in JSON format that is passed to the AWS Config Rule Lambda Function",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "config",
+    "resource_type": "organization_managed_rule",
+    "field_name": "input_parameters",
+    "description": "A string in JSON format that is passed to the AWS Config Rule Lambda Function",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "connect",
+    "resource_type": "contact_flow",
+    "field_name": "content",
+    "description": "Specifies the content of the Contact Flow, provided as a JSON string, written in Amazon Connect Contact Flow Language. If defined, the `filename` argument cannot be used.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "connect",
+    "resource_type": "contact_flow",
+    "field_name": "content_hash",
+    "description": "Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the Contact Flow source specified with `filename`. The usual way to set this is filebase64sha256(\"mycontact_flow.json\") (Terraform 0.11.12 and later) or base64sha256(file(\"mycontact_flow.json\")) (Terraform 0.11.11 and earlier), where \"mycontact_flow.json\" is the local filename of the Contact Flow source.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "connect",
+    "resource_type": "contact_flow_module",
+    "field_name": "content",
+    "description": "Specifies the content of the Contact Flow Module, provided as a JSON string, written in Amazon Connect Contact Flow Language. If defined, the `filename` argument cannot be used.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "connect",
+    "resource_type": "contact_flow_module",
+    "field_name": "content_hash",
+    "description": "Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the Contact Flow Module source specified with `filename`. The usual way to set this is filebase64sha256(\"contact_flow_module.json\") (Terraform 0.11.12 and later) or base64sha256(file(\"contact_flow_module.json\")) (Terraform 0.11.11 and earlier), where \"contact_flow_module.json\" is the local filename of the Contact Flow Module source.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "controltower",
+    "resource_type": "control",
+    "field_name": "value",
+    "description": "The value of the parameter.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "controltower",
+    "resource_type": "landing_zone",
+    "field_name": "manifest_json",
+    "description": "The manifest JSON file is a text file that describes your AWS resources. For examples, review [Launch your landing zone](https://docs.aws.amazon.com/controltower/latest/userguide/lz-api-launch).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "customerprofiles",
+    "resource_type": "domain",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "domain",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "domain",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "environment_profile",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "environment_profile",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "form_type",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "form_type",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "glossary",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "glossary",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "glossary_term",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "datazone",
+    "resource_type": "glossary_term",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "dlm",
+    "resource_type": "lifecycle_policy",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "dlm",
+    "resource_type": "lifecycle_policy",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "endpoint",
+    "field_name": "spatial_data_option_to_geo_json_function_name",
+    "description": "Use this attribute to convert SDO_GEOMETRY to GEOJSON format. By default, DMS calls the SDO2GEOJSON custom function if present and accessible.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "endpoint",
+    "field_name": "message_format",
+    "description": "Output format for the records created. Default is `json`. Valid values are `json` and `json-unformatted` (a single line with no tab).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "replication_config",
+    "field_name": "table_mappings",
+    "description": "An escaped JSON string that contains the table mappings. For information on table mapping see [Using Table Mapping with an AWS Database Migration Service Task to Select and Filter Data](http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.html)",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "replication_config",
+    "field_name": "replication_settings",
+    "description": "An escaped JSON string that are used to provision this replication configuration. For example, [Change processing tuning settings](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TaskSettings.ChangeProcessingTuning.html)",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "replication_config",
+    "field_name": "supplemental_settings",
+    "description": "JSON settings for specifying supplemental data. For more information see [Specifying supplemental data for task settings](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.TaskData.html)",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "replication_instance",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "replication_subnet_group",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "replication_task",
+    "field_name": "table_mappings",
+    "description": "Escaped JSON string that contains the table mappings. For information on table mapping see [Using Table Mapping with an AWS Database Migration Service Task to Select and Filter Data](http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.html)",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "replication_task",
+    "field_name": "replication_task_settings",
+    "description": "Escaped JSON string that contains the task settings. For a complete list of task settings, see [Task Settings for AWS Database Migration Service Tasks](http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TaskSettings.html). Note that `Logging.CloudWatchLogGroup` and `Logging.CloudWatchLogStream` are read only and should not be defined, even as `null`, in the configuration since AWS provides a value for these settings.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "dms",
+    "resource_type": "s3_endpoint",
+    "field_name": "external_table_definition",
+    "description": "JSON document that describes how AWS DMS should interpret the data. Required for `source` endpoints.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "dynamodb",
+    "resource_type": "resource_policy",
+    "field_name": "resource_arn",
+    "description": "The Amazon Resource Name (ARN) of the DynamoDB resource to which the policy will be attached. The resources you can specify include tables and streams. You can control index permissions using the base table's policy. To specify the same permission level for your table and its indexes, you can provide both the table and index Amazon Resource Name (ARN)s in the Resource field of a given Statement in your policy document. Alternatively, to specify different permissions for your table, indexes, or both, you can define multiple Statement fields in your policy document.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "dynamodb",
+    "resource_type": "resource_policy",
+    "field_name": "policy",
+    "description": "n Amazon Web Services resource-based policy document in JSON format. The maximum size supported for a resource-based policy document is 20 KB. DynamoDB counts whitespaces when calculating the size of a policy against this limit. For a full list of all considerations that you should keep in mind while attaching a resource-based policy, see Resource-based policy considerations.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "dynamodb",
+    "resource_type": "table_item",
+    "field_name": "item",
+    "description": "JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "ecr",
+    "resource_type": "lifecycle_policy",
+    "field_name": "policy",
+    "description": "The policy document. This is a JSON formatted string. See more details about [Policy Parameters](http://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html#lifecycle_policy_parameters) in the official AWS docs. Consider using the [`aws_ecr_lifecycle_policy_document` data_source](/docs/providers/aws/d/ecr_lifecycle_policy_document.html) to generate/manage the JSON document used for the `policy` argument.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "ecr",
+    "resource_type": "pull_time_update_exclusion",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ecr",
+    "resource_type": "pull_time_update_exclusion",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ecr",
+    "resource_type": "registry_policy",
+    "field_name": "policy",
+    "description": "The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy)",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "ecr",
+    "resource_type": "repository_creation_template",
+    "field_name": "lifecycle_policy",
+    "description": "The lifecycle policy document to apply to any created repositories. See more details about [Policy Parameters](http://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html#lifecycle_policy_parameters) in the official AWS docs. Consider using the [`aws_ecr_lifecycle_policy_document` data_source](/docs/providers/aws/d/ecr_lifecycle_policy_document.html) to generate/manage the JSON document used for the `lifecycle_policy` argument.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "ecr",
+    "resource_type": "repository_creation_template",
+    "field_name": "repository_policy",
+    "description": "The registry policy document to apply to any created repositories. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "ecr",
+    "resource_type": "repository_policy",
+    "field_name": "policy",
+    "description": "The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy)",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "ecrpublic",
+    "resource_type": "repository_policy",
+    "field_name": "policy",
+    "description": "The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy)",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "ecs",
+    "resource_type": "cluster",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ecs",
+    "resource_type": "daemon_task_definition",
+    "field_name": "log_driver",
+    "description": "Log driver to use for the container. Valid values: `json-file`, `syslog`, `journald`, `gelf`, `fluentd`, `awslogs`, `splunk`, `awsfirelens`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "ecs",
+    "resource_type": "daemon_task_definition",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ecs",
+    "resource_type": "service",
+    "field_name": "format",
+    "description": "The format for Service Connect access log output. Valid values: `TEXT`, `JSON`. See [AWS documentation](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-connect-envoy-access-logs.html) for format details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "ecs",
+    "resource_type": "task_definition",
+    "field_name": "container_definitions",
+    "description": "A list of valid [container definitions](http://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_ContainerDefinition.html) provided as a single valid JSON document. Please note that you should only provide values that are part of the container definition document. For a detailed description of what parameters are available, see the [Task Definition Parameters](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html) section from the official [Developer Guide](https://docs.aws.amazon.com/AmazonECS/latest/developerguide).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "ecs",
+    "resource_type": "task_definition",
+    "field_name": "secret_string",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "efs",
+    "resource_type": "file_system_policy",
+    "field_name": "policy",
+    "description": "The JSON formatted file system policy for the EFS file system. see [Docs](https://docs.aws.amazon.com/efs/latest/ug/access-control-overview.html#access-control-manage-access-intro-resource-policies) for more info.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "eks",
+    "resource_type": "addon",
+    "field_name": "configuration_values",
+    "description": "Custom configuration values for addons with single JSON string. This JSON string value must match the JSON schema derived from [describe-addon-configuration](https://docs.aws.amazon.com/cli/latest/reference/eks/describe-addon-configuration.html).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "eks",
+    "resource_type": "addon",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "eks",
+    "resource_type": "cluster",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "eks",
+    "resource_type": "fargate_profile",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "eks",
+    "resource_type": "node_group",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "eks",
+    "resource_type": "pod_identity_association",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "elasticsearch",
+    "resource_type": "domain",
+    "field_name": "access_policies",
+    "description": "IAM policy document specifying the access policies for the domain.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "elasticsearch",
+    "resource_type": "domain",
+    "field_name": "policy_document",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "elasticsearch",
+    "resource_type": "domain_policy",
+    "field_name": "access_policies",
+    "description": "IAM policy document specifying the access policies for the domain",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "emr",
+    "resource_type": "cluster",
+    "field_name": "additional_info",
+    "description": "JSON string for selecting additional features such as adding proxy information. Note: Currently there is no API to retrieve the value of this argument after EMR cluster creation from provider, therefore Terraform cannot detect drift from the actual EMR cluster if its value is changed outside Terraform.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "emr",
+    "resource_type": "cluster",
+    "field_name": "configurations_json",
+    "description": "JSON string for supplying list of configurations for the EMR cluster.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "emr",
+    "resource_type": "cluster",
+    "field_name": "autoscaling_policy",
+    "description": "String containing the [EMR Auto Scaling Policy](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-automatic-scaling.html) JSON.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "emr",
+    "resource_type": "cluster",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "emr",
+    "resource_type": "cluster",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "emr",
+    "resource_type": "instance_group",
+    "field_name": "autoscaling_policy",
+    "description": "The autoscaling policy document. This is a JSON formatted string. See [EMR Auto Scaling](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-automatic-scaling.html)",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "emr",
+    "resource_type": "instance_group",
+    "field_name": "configurations_json",
+    "description": "A JSON string for supplying list of configurations specific to the EMR instance group. Note that this can only be changed when using EMR release 5.21 or later.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "emr",
+    "resource_type": "security_configuration",
+    "field_name": "configuration",
+    "description": "A JSON formatted Security Configuration",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "finspace",
+    "resource_type": "kx_user",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "fis",
+    "resource_type": "experiment_template",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "fis",
+    "resource_type": "experiment_template",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "flow",
+    "resource_type": "log",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "flow",
+    "resource_type": "log",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "fms",
+    "resource_type": "policy",
+    "field_name": "managed_service_data",
+    "description": "Details about the service that are specific to the service type, in JSON format. For service type `SHIELD_ADVANCED`, this is an empty string. Examples depending on `type` can be found in the [AWS Firewall Manager SecurityServicePolicyData API Reference](https://docs.aws.amazon.com/fms/2018-01-01/APIReference/API_SecurityServicePolicyData.html).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "gamelift",
+    "resource_type": "game_server_group",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "glacier",
+    "resource_type": "vault",
+    "field_name": "access_policy",
+    "description": "The policy document. This is a JSON formatted string.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "glacier",
+    "resource_type": "vault_lock",
+    "field_name": "policy",
+    "description": "JSON string containing the IAM policy to apply as the Glacier Vault Lock policy.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "catalog_table",
+    "field_name": "write_default",
+    "description": "Default value as JSON used to populate the field's value for any records written after the field was added to the schema, if the writer does not supply the field's value.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "catalog_table",
+    "field_name": "initial_default",
+    "description": "Default value as JSON used to populate the field's value for all records that were written before the field was added to the schema.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "catalog_table",
+    "field_name": "type",
+    "description": "The data type definition for this field as a JSON string, specifying the structure and format of the data it contains. Examples: `\"long\"`, `\"string\"`, `\"timestamp\"`, `\"decimal(10,2)\"`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "classifier",
+    "field_name": "json_classifier",
+    "description": "A classifier for JSON content. Defined below.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "classifier",
+    "field_name": "classification",
+    "description": "An identifier of the data format that the classifier matches, such as Twitter, JSON, Omniture logs, Amazon CloudWatch Logs, and so on.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "classifier",
+    "field_name": "json_path",
+    "description": "A `JsonPath` string defining the JSON data for the classifier to classify. AWS Glue supports a subset of `JsonPath`, as described in [Writing JsonPath Custom Classifiers](https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "connection",
+    "field_name": "connection_type",
+    "description": "Type of the connection. Valid values: `AZURECOSMOS`, `AZURESQL`, `BIGQUERY`, `CUSTOM`, `DYNAMODB`, `JDBC`, `KAFKA`, `MARKETPLACE`, `MONGODB`, `NETWORK`, `OPENSEARCH`, `SNOWFLAKE`. Defaults to `JDBC`. Some connection types require the `SparkProperties` property with a JSON document that contains the actual connection properties. For specific examples, refer to [Example Usage](#example-usage).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "connection",
+    "field_name": "secret_string",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "connection",
+    "field_name": "SparkProperties",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "crawler",
+    "field_name": "configuration",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "dev_endpoint",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "job",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "glue",
+    "resource_type": "schema",
+    "field_name": "data_format",
+    "description": "The data format of the schema definition. Valid values are `AVRO`, `JSON` and `PROTOBUF`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "grafana",
+    "resource_type": "license_association",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "grafana",
+    "resource_type": "role_association",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "grafana",
+    "resource_type": "workspace",
+    "field_name": "configuration",
+    "description": "The configuration string for the workspace that you create. For more information about the format and configuration options available, see [Working in your Grafana workspace](https://docs.aws.amazon.com/grafana/latest/userguide/AMG-configure-workspace.html).",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "grafana",
+    "resource_type": "workspace",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "grafana",
+    "resource_type": "workspace_saml_configuration",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "guardduty",
+    "resource_type": "publishing_destination",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "access_key",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "group_policy",
+    "field_name": "policy",
+    "description": "The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy)",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "instance_profile",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "policy",
+    "field_name": "policy",
+    "description": "Policy document. This is a JSON formatted string. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy)",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "policy_attachment",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "policy_attachment",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "role",
+    "field_name": "assume_role_policy",
+    "description": "Policy that grants an entity permission to assume the role.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "role",
+    "field_name": "policy",
+    "description": "Policy document as a JSON formatted string. For more information about building IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/tutorials/terraform/aws-iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "role_policy",
+    "field_name": "policy",
+    "description": "The inline policy document.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "role_policy",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "role_policy_attachment",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "role_policy_attachment",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "user",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iam",
+    "resource_type": "user_policy",
+    "field_name": "policy",
+    "description": "The policy document. This is a JSON formatted string. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "imagebuilder",
+    "resource_type": "lifecycle_policy",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "policy",
+    "field_name": "policy",
+    "description": "The policy document. This is a JSON formatted string. Use the [IoT Developer Guide](http://docs.aws.amazon.com/iot/latest/developerguide/iot-policies.html) for more information on IoT Policies. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "policy_attachment",
+    "field_name": "policy",
+    "description": "The name of the policy to attach.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "provisioning_template",
+    "field_name": "template_body",
+    "description": "The JSON formatted contents of the fleet provisioning template.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "provisioning_template",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "provisioning_template",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "role_alias",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "topic_rule",
+    "field_name": "batch_mode",
+    "description": "The payload that contains a JSON array of records will be sent to IoT Events via a batch call.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "topic_rule",
+    "field_name": "message_format",
+    "description": "The message format of the message to publish. Accepted values are \"JSON\" and \"RAW\".",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "topic_rule",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "iot",
+    "resource_type": "topic_rule",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ivschat",
+    "resource_type": "logging_configuration",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "kendra",
+    "resource_type": "data_source",
+    "field_name": "template",
+    "description": "JSON string containing a [data source template schema](https://docs.aws.amazon.com/kendra/latest/dg/ds-schemas.html).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "kendra",
+    "resource_type": "index",
+    "field_name": "json_token_type_configuration",
+    "description": "A block that specifies the information about the JSON token type configuration. [Detailed below](#json_token_type_configuration).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "analytics_application",
+    "field_name": "record_format_type",
+    "description": "The type of Record Format. Can be `CSV` or `JSON`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "analytics_application",
+    "field_name": "json",
+    "description": "Mapping information when JSON is the record format on the streaming source.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "data_format_conversion_configuration",
+    "description": "Nested argument for the serializer, deserializer, and schema for converting data from the JSON format to the Parquet or ORC format before writing it to Amazon S3. See [`data_format_conversion_configuration` block](#data_format_conversion_configuration-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "file_extension",
+    "description": "The file extension to override the default file extension (for example, `.json`).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "deserializer",
+    "description": "Specifies which deserializer to use. You can choose either the Apache Hive JSON SerDe or the OpenX JSON SerDe. See [`deserializer` block](#deserializer-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "hive_json_ser_de",
+    "description": "Specifies the native Hive / HCatalog JsonSerDe. More details below. See [`hive_json_ser_de` block](#hive_json_ser_de-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "open_x_json_ser_de",
+    "description": "Specifies the OpenX SerDe. See [`open_x_json_ser_de` block](#open_x_json_ser_de-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "timestamp_formats",
+    "description": "A list of how you want Kinesis Data Firehose to parse the date and time stamps that may be present in your input data JSON. To specify these format strings, follow the pattern syntax of JodaTime's DateTimeFormat format strings. For more information, see [Class DateTimeFormat](https://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormat.html). You can also use the special value millis to parse time stamps in epoch milliseconds. If you don't specify a format, Kinesis Data Firehose uses java.sql.Timestamp::valueOf by default.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "case_insensitive",
+    "description": "When set to true, which is the default, Kinesis Data Firehose converts JSON keys to lowercase before deserializing them.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "convert_dots_in_json_keys_to_underscores",
+    "description": "When set to `true`, specifies that the names of the keys include dots and that you want Kinesis Data Firehose to replace them with underscores. This is useful because Apache Hive does not allow dots in column names. For example, if the JSON contains a key whose name is \"a.b\", you can define the column name to be \"a_b\" when using this option. Defaults to `false`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "parameter_name",
+    "description": "Parameter name. Valid Values: `LambdaArn`, `NumberOfRetries`, `MetadataExtractionQuery`, `JsonParsingEngine`, `RoleArn`, `BufferSizeInMBs`, `BufferIntervalInSeconds`, `SubRecordType`, `Delimiter`, `CompressionFormat`, `DataMessageExtraction`. Validation is done against [AWS SDK constants](https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/firehose/types#ProcessorParameterName); so values not explicitly listed may also work.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "input_format_configuration",
+    "description": "Specifies the deserializer that you want Kinesis Data Firehose to use to convert the format of your data from JSON. See [`input_format_configuration` block](#input_format_configuration-block) below for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "firehose_delivery_stream",
+    "field_name": "column_to_json_key_mappings",
+    "description": "A map of column names to JSON keys that aren't identical to the column names. This is useful when the JSON contains keys that are Hive keywords. For example, timestamp is a Hive keyword. If you have a JSON key named timestamp, set this parameter to `{ ts = \"timestamp\" }` to map this key to a column named ts.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesis",
+    "resource_type": "resource_policy",
+    "field_name": "policy",
+    "description": "The policy document.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesisanalyticsv2",
+    "resource_type": "application",
+    "field_name": "mapping_parameters",
+    "description": "Provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesisanalyticsv2",
+    "resource_type": "application",
+    "field_name": "record_format_type",
+    "description": "Specifies the format of the records on the output stream. Valid values: `CSV`, `JSON`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kinesisanalyticsv2",
+    "resource_type": "application",
+    "field_name": "json_mapping_parameters",
+    "description": "Provides additional mapping information when JSON is the record format on the streaming source.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kms",
+    "resource_type": "external_key",
+    "field_name": "policy",
+    "description": "A key policy JSON document. If you do not provide a key policy, AWS KMS attaches a default key policy to the CMK.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "kms",
+    "resource_type": "grant",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "kms",
+    "resource_type": "key",
+    "field_name": "policy",
+    "description": "A valid policy JSON document. Although this is a key policy, not an IAM policy, an [`aws_iam_policy_document`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document), in the form that designates a principal, can be used. For more information about building policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "kms",
+    "resource_type": "key_policy",
+    "field_name": "policy",
+    "description": "A valid policy JSON document. Although this is a key policy, not an IAM policy, an [`aws_iam_policy_document`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document), in the form that designates a principal, can be used. For more information about building policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "lambda",
+    "resource_type": "event_source_mapping",
+    "field_name": "event_record_format",
+    "description": "Record format that Lambda delivers to the function after schema validation. Valid values: `JSON`, `SOURCE`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "lambda",
+    "resource_type": "event_source_mapping",
+    "field_name": "pattern",
+    "description": "Filter pattern up to 4096 characters. See [Filter Rule Syntax](https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventfiltering.html#filtering-syntax).",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "lambda",
+    "resource_type": "function",
+    "field_name": "log_format",
+    "description": "Log format. Valid values: `Text`, `JSON`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "lambda",
+    "resource_type": "function",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "lambda",
+    "resource_type": "function",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "lambda",
+    "resource_type": "invocation",
+    "field_name": "input",
+    "description": "JSON payload to the Lambda function.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "lambda",
+    "resource_type": "invocation",
+    "field_name": "lifecycle_scope",
+    "description": "Lifecycle scope of the resource to manage. Valid values are `CREATE_ONLY` and `CRUD`. Defaults to `CREATE_ONLY`. `CREATE_ONLY` will invoke the function only on creation or replacement. `CRUD` will invoke the function on each lifecycle event, and augment the input JSON payload with additional lifecycle information.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "lambda",
+    "resource_type": "invocation",
+    "field_name": "terraform_key",
+    "description": "JSON key used to store lifecycle information in the input JSON payload. Defaults to `tf`. This additional key is only included when `lifecycle_scope` is set to `CRUD`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "lambda",
+    "resource_type": "permission",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "lb",
+    "resource_type": "listener",
+    "field_name": "routing_http_response_content_security_policy_header_value",
+    "description": "Specifies restrictions enforced by the browser to help minimize the risk of certain types of security threats. Can only be set if protocol is `HTTP` or `HTTPS` for Application Load Balancers. Not supported for Network Load Balancer, or with a Gateway Load Balancer. Values for this are extensive, and can be impactful when set, consult Content-Security-Policy documentation.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "lb",
+    "resource_type": "listener",
+    "field_name": "content_type",
+    "description": "Content type. Valid values are `text/plain`, `text/css`, `text/html`, `application/javascript` and `application/json`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "lb",
+    "resource_type": "listener",
+    "field_name": "jwks_endpoint",
+    "description": "JSON Web Key Set (JWKS) endpoint. This endpoint contains JSON Web Keys (JWK) that are used to validate signatures from the provider. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "lb",
+    "resource_type": "listener_rule",
+    "field_name": "content_type",
+    "description": "The content type. Valid values are `text/plain`, `text/css`, `text/html`, `application/javascript` and `application/json`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "lb",
+    "resource_type": "listener_rule",
+    "field_name": "jwks_endpoint",
+    "description": "JSON Web Key Set (JWKS) endpoint. This endpoint contains JSON Web Keys (JWK) that are used to validate signatures from the provider. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "lexv2models",
+    "resource_type": "bot",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "lexv2models",
+    "resource_type": "intent",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "lightsail",
+    "resource_type": "container_service",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "m2",
+    "resource_type": "application",
+    "field_name": "definition",
+    "description": "The application definition for this application. You can specify either inline JSON or an S3 bucket location.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "m2",
+    "resource_type": "application",
+    "field_name": "content",
+    "description": "JSON application definition. Either this or `s3_location` must be specified.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "media",
+    "resource_type": "store_container_policy",
+    "field_name": "policy",
+    "description": "The contents of the policy. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "msk",
+    "resource_type": "cluster",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "msk",
+    "resource_type": "cluster_policy",
+    "field_name": "policy",
+    "description": "Resource policy for cluster.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "msk",
+    "resource_type": "scram_secret_association",
+    "field_name": "secret_string",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "msk",
+    "resource_type": "scram_secret_association",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "msk",
+    "resource_type": "topic",
+    "field_name": "configs",
+    "description": "Explicit configured Kafka configuration in JSON format for Topic.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "networkfirewall",
+    "resource_type": "resource_policy",
+    "field_name": "policy",
+    "description": "JSON formatted policy document that controls access to the Network Firewall resource. The policy must be provided **without whitespaces**.  We recommend using [jsonencode](https://www.terraform.io/docs/configuration/functions/jsonencode.html) for formatting as seen in the examples above. For more details, including available policy statement Actions, see the [Policy](https://docs.aws.amazon.com/network-firewall/latest/APIReference/API_PutResourcePolicy.html#API_PutResourcePolicy_RequestSyntax) parameter in the AWS API documentation.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "networkmanager",
+    "resource_type": "core_network",
+    "field_name": "create_base_policy",
+    "description": "Whether to create a base policy when a core network is created or updated. A base policy is created and set to `LIVE` to allow attachments to the core network (e.g. VPC Attachments) before applying a policy document provided using the [`aws_networkmanager_core_network_policy_attachment` resource](/docs/providers/aws/r/networkmanager_core_network_policy_attachment.html). This base policy is needed if your core network does not have any `LIVE` policies and your policy document has static routes pointing to VPC attachments and you want to attach your VPCs to the core network before applying the desired policy document. Valid values are `true` or `false`. An example of this Terraform snippet can be found above [for VPC Attachment in a single region](#with-vpc-attachment-single-region) and [for VPC Attachment multi-region](#with-vpc-attachment-multi-region). An example base policy is shown below. This base policy is overridden with the policy that you specify in the [`aws_networkmanager_core_network_policy_attachment` resource](/docs/providers/aws/r/networkmanager_core_network_policy_attachment.html).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "networkmanager",
+    "resource_type": "core_network_policy_attachment",
+    "field_name": "policy_document",
+    "description": "Policy document for creating a core network. Note that updating this argument will result in the new policy document version being set as the `LATEST` and `LIVE` policy document. Refer to the [Core network policies documentation](https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-policy-change-sets.html) for more information.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "networkmanager",
+    "resource_type": "site_to_site_vpn_attachment",
+    "field_name": "policy_document",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "notifications",
+    "resource_type": "event_rule",
+    "field_name": "event_pattern",
+    "description": "JSON string defining the event pattern to match. Maximum length is 4096 characters.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "oam",
+    "resource_type": "sink_policy",
+    "field_name": "policy",
+    "description": "JSON policy to use. If you are updating an existing policy, the entire existing policy is replaced by what you specify here.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "observabilityadmin",
+    "resource_type": "s3_table_integration",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "observabilityadmin",
+    "resource_type": "s3_table_integration",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "observabilityadmin",
+    "resource_type": "telemetry_pipeline",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "observabilityadmin",
+    "resource_type": "telemetry_pipeline",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "observabilityadmin",
+    "resource_type": "telemetry_rule",
+    "field_name": "output_format",
+    "description": "Format for ELB access log entries. Valid values: `plain-text`, `json`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "observabilityadmin",
+    "resource_type": "telemetry_rule_for_organization",
+    "field_name": "output_format",
+    "description": "Format for ELB access log entries. Valid values: `plain-text`, `json`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "opensearch",
+    "resource_type": "application",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "opensearch",
+    "resource_type": "application",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "opensearch",
+    "resource_type": "domain",
+    "field_name": "access_policies",
+    "description": "IAM policy document specifying the access policies for the domain.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "opensearch",
+    "resource_type": "domain",
+    "field_name": "jwks_url",
+    "description": "URL endpoint that hosts the JSON Web Key Set (JWKS) containing public keys used to verify JWT signatures. This argument can be specified only with OpenSearch versions 3.3 and later. At least one of `jwks_url` or `public_key` must be specified when `enabled` is set to `true`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "opensearch",
+    "resource_type": "domain",
+    "field_name": "policy_document",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "opensearch",
+    "resource_type": "domain_policy",
+    "field_name": "access_policies",
+    "description": "IAM policy document specifying the access policies for the domain",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "opensearchserverless",
+    "resource_type": "access_policy",
+    "field_name": "policy",
+    "description": "JSON policy document to use as the content for the new policy",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "opensearchserverless",
+    "resource_type": "collection",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "opensearchserverless",
+    "resource_type": "lifecycle_policy",
+    "field_name": "policy",
+    "description": "JSON policy document to use as the content for the new policy.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "opensearchserverless",
+    "resource_type": "security_policy",
+    "field_name": "policy",
+    "description": "JSON policy document to use as the content for the new policy",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "organizations",
+    "resource_type": "policy",
+    "field_name": "content",
+    "description": "The policy content to add to the new policy.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "organizations",
+    "resource_type": "resource_policy",
+    "field_name": "content",
+    "description": "Content for the resource policy. The text must be correctly formatted JSON that complies with the syntax for the resource policy's type. See the [_AWS Organizations User Guide_](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_delegate_examples.html) for examples.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "osis",
+    "resource_type": "pipeline",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "pinpoint",
+    "resource_type": "email_channel",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "pinpoint",
+    "resource_type": "email_channel",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "pinpoint",
+    "resource_type": "email_template",
+    "field_name": "default_substitutions",
+    "description": "JSON object that specifies the default values to use for message variables in the message template. This object is a set of key-value pairs. Each key defines a message variable in the template. The corresponding value defines the default value for that variable. When you create a message that's based on the template, you can override these defaults with message-specific and address-specific variables and values.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "pinpoint",
+    "resource_type": "event_stream",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "pinpoint",
+    "resource_type": "event_stream",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "pinpoint",
+    "resource_type": "gcm_channel",
+    "field_name": "api_key",
+    "description": "Platform credential API key from Google. Conflicts with `service_json`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "pinpoint",
+    "resource_type": "gcm_channel",
+    "field_name": "service_json",
+    "description": "Service Account JSON from Google to use with the GCM API. Conflicts with `api_key`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "pipes",
+    "resource_type": "pipe",
+    "field_name": "timestamp",
+    "description": "The time the event occurred, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC. This is the JSON path to the field in the event e.g. $.detail.timestamp",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "pipes",
+    "resource_type": "pipe",
+    "field_name": "time",
+    "description": "The time stamp of the event, per RFC3339. If no time stamp is provided, the time stamp of the PutEvents call is used. This is the JSON path to the field in the event e.g. $.detail.timestamp",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "pipes",
+    "resource_type": "pipe",
+    "field_name": "pattern",
+    "description": "The event pattern. At most 4096 characters.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "pipes",
+    "resource_type": "pipe",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "pipes",
+    "resource_type": "pipe",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "pipes",
+    "resource_type": "pipe",
+    "field_name": "input_template",
+    "description": "Valid JSON text passed to the target. In this case, nothing from the event itself is passed to the target. Maximum length of 8192 characters.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "pipes",
+    "resource_type": "pipe",
+    "field_name": "output_format",
+    "description": "EventBridge format for the log records. Valid values `json`, `plain` and `w3c`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "prometheus",
+    "resource_type": "resource_policy",
+    "field_name": "policy_document",
+    "description": "The JSON policy document to use as the resource-based policy. This policy defines the permissions that other AWS accounts or services have to access your workspace.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "quicksight",
+    "resource_type": "data_set",
+    "field_name": "format",
+    "description": "File format. Valid values are `CSV`, `TSV`, `CLF`, `ELF`, `XLSX`, and `JSON`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "quicksight",
+    "resource_type": "data_source",
+    "field_name": "content",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "quicksight",
+    "resource_type": "data_source",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "quicksight",
+    "resource_type": "data_source",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "quicksight",
+    "resource_type": "vpc_connection",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "quicksight",
+    "resource_type": "vpc_connection",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ram",
+    "resource_type": "permission",
+    "field_name": "policy_template",
+    "description": "A string in JSON format string that contains the following elements of a resource-based policy: Effect, Action and Condition.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "rds",
+    "resource_type": "custom_db_engine_version",
+    "field_name": "manifest",
+    "description": "The manifest file, in JSON format, that contains the list of database installation files. Conflicts with `filename`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "rds",
+    "resource_type": "custom_db_engine_version",
+    "field_name": "manifest_hash",
+    "description": "Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the manifest source specified with `filename`. The usual way to set this is filebase64sha256(\"manifest.json\") where \"manifest.json\" is the local filename of the manifest source.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "rds",
+    "resource_type": "export_task",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "rds",
+    "resource_type": "export_task",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "rds",
+    "resource_type": "integration",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "redshift",
+    "resource_type": "authentication_profile",
+    "field_name": "authentication_profile_content",
+    "description": "The content of the authentication profile in JSON format. The maximum length of the JSON string is determined by a quota for your account.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "redshift",
+    "resource_type": "cluster_snapshot",
+    "field_name": "cluster_snapshot_content",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "redshift",
+    "resource_type": "integration",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "redshift",
+    "resource_type": "resource_policy",
+    "field_name": "policy",
+    "description": "The content of the resource policy being updated.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "redshift",
+    "resource_type": "scheduled_action",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "redshift",
+    "resource_type": "scheduled_action",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "redshiftserverless",
+    "resource_type": "resource_policy",
+    "field_name": "policy",
+    "description": "The policy to create or update. For example, the following policy grants a user authorization to restore a snapshot.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "rekognition",
+    "resource_type": "stream_processor",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "rekognition",
+    "resource_type": "stream_processor",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "resourcegroups",
+    "resource_type": "group",
+    "field_name": "query",
+    "description": "The resource query as a JSON string.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "rolesanywhere",
+    "resource_type": "profile",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "route53",
+    "resource_type": "hosted_zone_dnssec",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "route53",
+    "resource_type": "key_signing_key",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "route53",
+    "resource_type": "traffic_policy",
+    "field_name": "document",
+    "description": "Policy document. This is a JSON formatted string. For more information about building Route53 traffic policy documents, see the [AWS Route53 Traffic Policy document format](https://docs.aws.amazon.com/Route53/latest/APIReference/api-policies-traffic-policy-document-format.html)",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "route53domains",
+    "resource_type": "delegation_signer_record",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "access_point",
+    "field_name": "policy",
+    "description": "Valid JSON document that specifies the policy that you want to apply to this access point. Removing `policy` from your configuration or setting `policy` to null or an empty string (i.e., `policy = \"\"`) _will not_ delete the policy since it could have been set by `aws_s3control_access_point_policy`. To remove the `policy`, set it to `\"{}\"` (an empty JSON document).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "bucket",
+    "field_name": "routing_rules",
+    "description": "JSON array containing [routing rules](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-websiteconfiguration-routingrules.html)",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "bucket_logging",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "bucket_notification",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "bucket_notification",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "bucket_policy",
+    "field_name": "policy",
+    "description": "Text of the policy. Although this is a bucket policy rather than an IAM policy, the [`aws_iam_policy_document`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) data source may be used, so long as it specifies a principal. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy). Note: Bucket policies are limited to 20 KB in size.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "bucket_replication_configuration",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "bucket_replication_configuration",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "object_copy",
+    "field_name": "source",
+    "description": "Specifies the source object for the copy operation. You specify the value in one of two formats. For objects not accessed through an access point, specify the name of the source bucket and the key of the source object, separated by a slash (`/`). For example, `testbucket/test1.json`. For objects accessed through access points, specify the ARN of the object as accessed through the access point, in the format `arn:aws:s3:\u003cRegion\u003e:\u003caccount-id\u003e:accesspoint/\u003caccess-point-name\u003e/object/\u003ckey\u003e`. For example, `arn:aws:s3:us-west-2:9999912999:accesspoint/my-access-point/object/testbucket/test1.json`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "s3",
+    "resource_type": "object_copy",
+    "field_name": "kms_encryption_context",
+    "description": "Specifies the AWS KMS Encryption Context to use for object encryption. The value is a base64-encoded UTF-8 string holding JSON with the encryption context key-value pairs.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "s3control",
+    "resource_type": "access_grants_instance_resource_policy",
+    "field_name": "policy",
+    "description": "The policy document.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "s3control",
+    "resource_type": "access_point_policy",
+    "field_name": "policy",
+    "description": "The policy that you want to apply to the specified access point.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "s3control",
+    "resource_type": "bucket_policy",
+    "field_name": "policy",
+    "description": "JSON string of the resource policy. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "s3control",
+    "resource_type": "multi_region_access_point_policy",
+    "field_name": "policy",
+    "description": "A valid JSON document that specifies the policy that you want to associate with this Multi-Region Access Point. Once applied, the policy can be edited, but not deleted. For more information, see the documentation on [Multi-Region Access Point Permissions](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointPermissions.html).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "s3control",
+    "resource_type": "object_lambda_access_point",
+    "field_name": "function_payload",
+    "description": "Additional JSON that provides supplemental data to the Lambda function used to transform objects.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "s3control",
+    "resource_type": "object_lambda_access_point_policy",
+    "field_name": "policy",
+    "description": "The Object Lambda Access Point resource policy document.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "s3files",
+    "resource_type": "file_system_policy",
+    "field_name": "policy",
+    "description": "JSON policy document.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "s3tables",
+    "resource_type": "table_bucket_policy",
+    "field_name": "resource_policy",
+    "description": "Amazon Web Services resource-based policy document in JSON format.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "s3tables",
+    "resource_type": "table_policy",
+    "field_name": "resource_policy",
+    "description": "Amazon Web Services resource-based policy document in JSON format.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "s3vectors",
+    "resource_type": "vector_bucket_policy",
+    "field_name": "policy",
+    "description": "The policy document.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "algorithm",
+    "field_name": "attribute_names",
+    "description": "List of JSON attribute names to select from the input data.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "algorithm",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "algorithm",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "code_repository",
+    "field_name": "secret_string",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "data_quality_job_definition",
+    "field_name": "json",
+    "description": "The JSON dataset used in the monitoring job. Fields are documented below.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "data_quality_job_definition",
+    "field_name": "line",
+    "description": "Indicates if the file should be read as a json object per line.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "data_quality_job_definition",
+    "field_name": "record_preprocessor_source_uri",
+    "description": "An Amazon S3 URI to a script that is called per row prior to running analysis. It can base64 decode the payload and convert it into a flatted json so that the built-in container can use the converted data. Applicable only for the built-in (first party) containers.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "domain",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "endpoint_configuration",
+    "field_name": "csv_content_types",
+    "description": "CSV content type headers to capture. One of `csv_content_types` or `json_content_types` is required.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "endpoint_configuration",
+    "field_name": "json_content_types",
+    "description": "The JSON content type headers to capture. One of `json_content_types` or `csv_content_types` is required.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "flow_definition",
+    "field_name": "human_loop_activation_conditions",
+    "description": "A JSON expressing use-case specific conditions declaratively. If any condition is matched, atomic tasks are created against the configured work team. For more information about how to structure the JSON, see [JSON Schema for Human Loop Activation Conditions in Amazon Augmented AI](https://docs.aws.amazon.com/sagemaker/latest/dg/a2i-human-fallback-conditions-json-schema.html).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "model",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "model_card",
+    "field_name": "content",
+    "description": "Content of the model card in [model card JSON schema](https://docs.aws.amazon.com/sagemaker/latest/dg/model-cards.html#model-cards-json-schema).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "model_package_group_policy",
+    "field_name": "resource_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "monitoring_schedule",
+    "field_name": "json",
+    "description": "JSON dataset used in the monitoring job. Fields are documented below.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "monitoring_schedule",
+    "field_name": "line",
+    "description": "Indicates if the file should be read as a JSON object per line.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "pipeline",
+    "field_name": "pipeline_definition",
+    "description": "The [JSON pipeline definition](https://aws-sagemaker-mlops.github.io/sagemaker-model-building-pipeline-definition-JSON-schema/) of the pipeline.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "sagemaker",
+    "resource_type": "workforce",
+    "field_name": "jwks_uri",
+    "description": "The OIDC IdP JSON Web Key Set (Jwks) URI used to configure your private workforce.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "scheduler",
+    "resource_type": "schedule",
+    "field_name": "input",
+    "description": "Text, or well-formed JSON, passed to the target. Read more in [Universal target](https://docs.aws.amazon.com/scheduler/latest/UserGuide/managing-targets-universal.html).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "schemas",
+    "resource_type": "registry_policy",
+    "field_name": "policy",
+    "description": "Resource Policy for EventBridge Schema Registry",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "schemas",
+    "resource_type": "schema",
+    "field_name": "type",
+    "description": "The type of the schema. Valid values: `OpenApi3` or `JSONSchemaDraft4`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "schemas",
+    "resource_type": "schema",
+    "field_name": "content",
+    "description": "The schema specification. Must be a valid Open API 3.0 spec.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "secretsmanager",
+    "resource_type": "secret",
+    "field_name": "policy",
+    "description": "Valid JSON document representing a [resource policy](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_resource-based-policies.html). For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy). Removing `policy` from your configuration or setting `policy` to null or an empty string (i.e., `policy = \"\"`) _will not_ delete the policy since it could have been set by `aws_secretsmanager_secret_policy`. To delete the `policy`, set it to `\"{}\"` (an empty JSON document).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "secretsmanager",
+    "resource_type": "secret_policy",
+    "field_name": "policy",
+    "description": "Valid JSON document representing a [resource policy](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_resource-based-policies.html). For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy). Unlike `aws_secretsmanager_secret`, where `policy` can be set to `\"{}\"` to delete the policy, `\"{}\"` is not a valid policy since `policy` is required.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "secretsmanager",
+    "resource_type": "secret_version",
+    "field_name": "secret_string",
+    "description": "Specifies text data that you want to encrypt and store in this version of the secret. This is required if `secret_binary` or `secret_string_wo` is not set.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "securityhub",
+    "resource_type": "automation_rule_v2",
+    "field_name": "ocsf_finding_criteria_json",
+    "description": "JSON-encoded OCSF finding criteria for the rule. See the [AWS API Reference](https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_OcsfFindingFilters.html) for details.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "servicecatalog",
+    "resource_type": "constraint",
+    "field_name": "parameters",
+    "description": "Constraint parameters in JSON format. The syntax depends on the constraint type. See details below.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "servicecatalog",
+    "resource_type": "service_action",
+    "field_name": "parameters",
+    "description": "List of parameters in JSON format. For example: `[{\\\"Name\\\":\\\"InstanceId\\\",\\\"Type\\\":\\\"TARGET\\\"}]` or `[{\\\"Name\\\":\\\"InstanceId\\\",\\\"Type\\\":\\\"TEXT_VALUE\\\"}]`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "servicecatalogappregistry",
+    "resource_type": "attribute_group",
+    "field_name": "attributes",
+    "description": "A JSON string of nested key-value pairs that represents the attributes of the group.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "servicecatalogappregistry",
+    "resource_type": "attribute_group_association",
+    "field_name": "attributes",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ses",
+    "resource_type": "identity_policy",
+    "field_name": "policy",
+    "description": "JSON string of the policy. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "sesv2",
+    "resource_type": "email_identity_policy",
+    "field_name": "policy",
+    "description": "- The text of the policy in JSON format.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "shield",
+    "resource_type": "drt_access_role_arn_association",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "shield",
+    "resource_type": "proactive_engagement",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic",
+    "field_name": "policy",
+    "description": "The fully-formed AWS policy as JSON. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic_data_protection_policy",
+    "field_name": "policy",
+    "description": "The fully-formed AWS policy as JSON. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic_policy",
+    "field_name": "policy",
+    "description": "The fully-formed AWS policy as JSON. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic_subscription",
+    "field_name": "protocol",
+    "description": "Protocol to use. Valid values are: `sqs`, `sms`, `lambda`, `firehose`, and `application`. Protocols `email`, `email-json`, `http` and `https` are also valid but partially supported. See details below.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic_subscription",
+    "field_name": "delivery_policy",
+    "description": "JSON String with the delivery policy (retries, backoff, etc.) that will be used in the subscription - this only applies to HTTP/S subscriptions. Refer to the [SNS docs](https://docs.aws.amazon.com/sns/latest/dg/DeliveryPolicies.html) for more details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic_subscription",
+    "field_name": "filter_policy",
+    "description": "JSON String with the filter policy that will be used in the subscription to filter messages seen by the target resource. Refer to the [SNS docs](https://docs.aws.amazon.com/sns/latest/dg/message-filtering.html) for more details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic_subscription",
+    "field_name": "raw_message_delivery",
+    "description": "Whether to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property). Default is `false`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic_subscription",
+    "field_name": "redrive_policy",
+    "description": "JSON String with the redrive policy that will be used in the subscription. Refer to the [SNS docs](https://docs.aws.amazon.com/sns/latest/dg/sns-dead-letter-queues.html#how-messages-moved-into-dead-letter-queue) for more details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic_subscription",
+    "field_name": "replay_policy",
+    "description": "JSON String with the archived message replay policy that will be used in the subscription. Refer to the [SNS docs](https://docs.aws.amazon.com/sns/latest/dg/message-archiving-and-replay-subscriber.html) for more details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sns",
+    "resource_type": "topic_subscription",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "sqs",
+    "resource_type": "queue",
+    "field_name": "redrive_policy",
+    "description": "JSON policy to set up the Dead Letter Queue, see [AWS docs](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/SQSDeadLetterQueue.html). Terraform will only perform drift detection of its value when present in a configuration. It is preferred to use the `aws_sqs_queue_redrive_policy` resource instead. **Note:** when specifying `maxReceiveCount`, you must specify it as an integer (`5`), and not a string (`\"5\"`).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "sqs",
+    "resource_type": "queue",
+    "field_name": "policy",
+    "description": "JSON policy for the SQS queue. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy). Terraform will only perform drift detection of its value when present in a configuration. It is preferred to use the `aws_sqs_queue_policy` resource instead.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "sqs",
+    "resource_type": "queue",
+    "field_name": "redrive_allow_policy",
+    "description": "JSON policy to set up the Dead Letter Queue redrive permission, see [AWS docs](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/SQSDeadLetterQueue.html). Terraform will only perform drift detection of its value when present in a configuration. It is preferred to use the `aws_sqs_queue_redrive_allow_policy` resource instead.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "sqs",
+    "resource_type": "queue_policy",
+    "field_name": "policy",
+    "description": "JSON policy for the SQS queue. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy). Ensure that `Version = \"2012-10-17\"` is set in the policy or AWS may hang in creating the queue.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "sqs",
+    "resource_type": "queue_redrive_allow_policy",
+    "field_name": "redrive_allow_policy",
+    "description": "The JSON redrive allow policy for the SQS queue. Learn more in the [Amazon SQS dead-letter queues documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "sqs",
+    "resource_type": "queue_redrive_allow_policy",
+    "field_name": "redrive_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "sqs",
+    "resource_type": "queue_redrive_policy",
+    "field_name": "redrive_policy",
+    "description": "The JSON redrive policy for the SQS queue. Accepts two key/val pairs: `deadLetterTargetArn` and `maxReceiveCount`. Learn more in the [Amazon SQS dead-letter queues documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "sqs",
+    "resource_type": "queue_redrive_policy",
+    "field_name": "redrive_allow_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ssm",
+    "resource_type": "activation",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ssm",
+    "resource_type": "document",
+    "field_name": "content",
+    "description": "The content for the SSM document in JSON or YAML format. The content of the document must not exceed 64KB. This quota also includes the content specified for input parameters at runtime. We recommend storing the contents for your new document in an external JSON or YAML file and referencing the file in a command.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "ssm",
+    "resource_type": "maintenance_window_task",
+    "field_name": "payload",
+    "description": "JSON to provide to your Lambda function as input.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "ssm",
+    "resource_type": "resource_data_sync",
+    "field_name": "sync_format",
+    "description": "A supported sync format. Only JsonSerDe is currently supported. Defaults to JsonSerDe.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "ssm",
+    "resource_type": "resource_data_sync",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ssmquicksetup",
+    "resource_type": "configuration_manager",
+    "field_name": "selected_patch_baselines",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ssoadmin",
+    "resource_type": "customer_managed_policy_attachment",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ssoadmin",
+    "resource_type": "customer_managed_policy_attachments_exclusive",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ssoadmin",
+    "resource_type": "permission_set_inline_policy",
+    "field_name": "inline_policy",
+    "description": "The IAM inline policy to attach to a Permission Set.",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ssoadmin",
+    "resource_type": "permissions_boundary_attachment",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "ssoadmin",
+    "resource_type": "trusted_token_issuer",
+    "field_name": "oidc_jwt_configuration",
+    "description": "A block that describes the settings for a trusted token issuer that works with OpenID Connect (OIDC) by using JSON Web Tokens (JWT). See [Documented below](#oidc_jwt_configuration-argument-reference) below.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "ssoadmin",
+    "resource_type": "trusted_token_issuer",
+    "field_name": "jwks_retrieval_option",
+    "description": "The method that the trusted token issuer can use to retrieve the JSON Web Key Set used to verify a JWT. Valid values are `OPEN_ID_DISCOVERY`",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "timestreaminfluxdb",
+    "resource_type": "db_cluster",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "timestreaminfluxdb",
+    "resource_type": "db_instance",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "timestreamquery",
+    "resource_type": "scheduled_query",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "timestreamquery",
+    "resource_type": "scheduled_query",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "transcribe",
+    "resource_type": "language_model",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "transcribe",
+    "resource_type": "language_model",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "transfer",
+    "resource_type": "access",
+    "field_name": "policy",
+    "description": "An IAM JSON policy document that scopes down user access to portions of their Amazon S3 bucket. IAM variables you can use inside this policy include `${Transfer:UserName}`, `${Transfer:HomeDirectory}`, and `${Transfer:HomeBucket}`. Since the IAM variable syntax matches Terraform's interpolation syntax, they must be escaped inside Terraform configuration strings (`$${Transfer:UserName}`).  These are evaluated on-the-fly when navigating the bucket.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "transfer",
+    "resource_type": "server",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "transfer",
+    "resource_type": "ssh_key",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "transfer",
+    "resource_type": "ssh_key",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "transfer",
+    "resource_type": "user",
+    "field_name": "policy",
+    "description": "An IAM JSON policy document that scopes down user access to portions of their Amazon S3 bucket. IAM variables you can use inside this policy include `${Transfer:UserName}`, `${Transfer:HomeDirectory}`, and `${Transfer:HomeBucket}`. Since the IAM variable syntax matches Terraform's interpolation syntax, they must be escaped inside Terraform configuration strings (`$${Transfer:UserName}`).  These are evaluated on-the-fly when navigating the bucket.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "transfer",
+    "resource_type": "user",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "transfer",
+    "resource_type": "web_app",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "transfer",
+    "resource_type": "web_app",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "verifiedaccess",
+    "resource_type": "endpoint",
+    "field_name": "policy_document",
+    "description": "The policy document that is associated with this resource.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "verifiedaccess",
+    "resource_type": "group",
+    "field_name": "policy_document",
+    "description": "The policy document that is associated with this resource.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "verifiedpermissions",
+    "resource_type": "schema",
+    "field_name": "value",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "vpc",
+    "resource_type": "endpoint",
+    "field_name": "policy",
+    "description": "A policy to attach to the endpoint that controls access to the service. This is a JSON formatted string. Defaults to full access. All `Gateway` and some `Interface` endpoints support policies - see the [relevant AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints-access.html) for more details. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "vpc",
+    "resource_type": "endpoint_connection_notification",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "vpc",
+    "resource_type": "endpoint_policy",
+    "field_name": "policy",
+    "description": "A policy to attach to the endpoint that controls access to the service. Defaults to full access. All `Gateway` and some `Interface` endpoints support policies - see the [relevant AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints-access.html) for more details. For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "vpclattice",
+    "resource_type": "auth_policy",
+    "field_name": "policy",
+    "description": "The auth policy. The policy string in JSON must not contain newlines or blank lines.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "vpclattice",
+    "resource_type": "resource_policy",
+    "field_name": "policy",
+    "description": "An IAM policy. The policy string in JSON must not contain newlines or blank lines.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "vpn",
+    "resource_type": "connection",
+    "field_name": "bgp_log_output_format",
+    "description": "Set BGP log format. Default format is json. Possible values are: `json` and `text`. The default is `json`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "vpn",
+    "resource_type": "connection",
+    "field_name": "log_output_format",
+    "description": "Set log format. Default format is json. Possible values are: `json` and `text`. The default is `json`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafregional",
+    "resource_type": "web_acl_association",
+    "field_name": "body",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "rule_group",
+    "field_name": "invalid_fallback_behavior",
+    "description": "What to do when JSON parsing fails. Defaults to evaluating up to the first parsing failure. Valid values are `EVALUATE_AS_STRING`, `MATCH` and `NO_MATCH`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "rule_group",
+    "field_name": "match_pattern",
+    "description": "The patterns to look for in the JSON body. You must specify exactly one setting: either `all` or `included_paths`. See [JsonMatchPattern](https://docs.aws.amazon.com/waf/latest/APIReference/API_JsonMatchPattern.html) for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "rule_group",
+    "field_name": "match_scope",
+    "description": "The parts of the JSON to match against using the `match_pattern`. Valid values are `ALL`, `KEY` and `VALUE`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "rule_group",
+    "field_name": "fallback_behavior",
+    "description": "What AWS WAF should do if it fails to completely parse the JSON body. Valid values are `MATCH` (default) and `NO_MATCH`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "rule_group",
+    "field_name": "rules_json",
+    "description": "Raw JSON string to allow more than three nested statements. Conflicts with `rule` attribute. This is for advanced use cases where more than 3 levels of nested statements are required. **There is no drift detection at this time**. If you use this attribute instead of `rule`, you will be foregoing drift detection. Additionally, importing an existing rule group into a configuration with `rules_json` set will result in a one time in-place update as the remote rule configuration is initially written to the `rule` attribute. See the AWS [documentation](https://docs.aws.amazon.com/waf/latest/APIReference/API_CreateRuleGroup.html) for the JSON structure.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "rule_group",
+    "field_name": "content_type",
+    "description": "The type of content in the payload that you are defining in the `content` argument. Valid values are `TEXT_PLAIN`, `TEXT_HTML`, or `APPLICATION_JSON`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "rule_group",
+    "field_name": "json_body",
+    "description": "Inspect the request body as JSON. See [JSON Body](#json-body) for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl",
+    "field_name": "fallback_behavior",
+    "description": "What AWS WAF should do if it fails to completely parse the JSON body. Valid values are `MATCH` (default) and `NO_MATCH`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl",
+    "field_name": "default_size_inspection_limit",
+    "description": "Specifies the maximum size of the web request body component that an associated AWS Verified Access instances should send to AWS WAF for inspection. This applies to statements in the web ACL that inspect the body or JSON body. Valid values are `KB_16`, `KB_32`, `KB_48` and `KB_64`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl",
+    "field_name": "content_type",
+    "description": "Type of content in the payload that you are defining in the `content` argument. Valid values are `TEXT_PLAIN`, `TEXT_HTML`, or `APPLICATION_JSON`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl",
+    "field_name": "json_body",
+    "description": "Inspect the request body as JSON. See [`json_body`](#json_body-block) for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl",
+    "field_name": "invalid_fallback_behavior",
+    "description": "What to do when JSON parsing fails. Defaults to evaluating up to the first parsing failure. Valid values are `EVALUATE_AS_STRING`, `MATCH` and `NO_MATCH`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl",
+    "field_name": "match_pattern",
+    "description": "The patterns to look for in the JSON body. You must specify exactly one setting: either `all` or `included_paths`. See [JsonMatchPattern](https://docs.aws.amazon.com/waf/latest/APIReference/API_JsonMatchPattern.html) for details.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl",
+    "field_name": "match_scope",
+    "description": "The parts of the JSON to match against using the `match_pattern`. Valid values are `ALL`, `KEY` and `VALUE`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_association",
+    "field_name": "body",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_logging_configuration",
+    "field_name": "policy_document",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_rule",
+    "field_name": "invalid_fallback_behavior",
+    "description": "How to handle requests with invalid JSON body. Valid values: `EVALUATE_AS_STRING`, `MATCH`, `NO_MATCH`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_rule",
+    "field_name": "all",
+    "description": "Inspect all JSON content.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_rule",
+    "field_name": "included_paths",
+    "description": "List of JSON pointer expressions to inspect (e.g., `/foo/bar`).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_rule",
+    "field_name": "json_body",
+    "description": "Inspect the request body as JSON. See [JSON Body](#json-body) below.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_rule",
+    "field_name": "match_pattern",
+    "description": "JSON content to inspect. See [JSON Body Match Pattern](#json-body-match-pattern) below.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_rule",
+    "field_name": "match_scope",
+    "description": "Parts of the JSON to inspect. Valid values: `ALL`, `KEY`, `VALUE`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_rule_group_association",
+    "field_name": "payload_type",
+    "description": "Payload type for your login endpoint, either JSON or form encoded.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_rule_group_association",
+    "field_name": "json",
+    "description": "Configures inspection of the response JSON. [See below](#json).",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "wafv2",
+    "resource_type": "web_acl_rule_group_association",
+    "field_name": "identifier",
+    "description": "Identifier for the value to match against in the JSON.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "workspaces",
+    "resource_type": "directory",
+    "field_name": "assume_role_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "workspacesweb",
+    "resource_type": "browser_settings",
+    "field_name": "browser_policy",
+    "description": "Browser policy for the browser settings. This is a JSON string that defines the browser settings policy.",
+    "detection_method": "both"
+  },
+  {
+    "service_name": "workspacesweb",
+    "resource_type": "browser_settings_association",
+    "field_name": "browser_policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "workspacesweb",
+    "resource_type": "session_logger",
+    "field_name": "log_file_format",
+    "description": "Format of the log file written to S3. Valid values: `Json`, `Parquet`.",
+    "detection_method": "description_phrase"
+  },
+  {
+    "service_name": "workspacesweb",
+    "resource_type": "session_logger",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "workspacesweb",
+    "resource_type": "session_logger_association",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "xray",
+    "resource_type": "encryption_config",
+    "field_name": "policy",
+    "description": "",
+    "detection_method": "jsonencode_example"
+  },
+  {
+    "service_name": "xray",
+    "resource_type": "resource_policy",
+    "field_name": "policy_document",
+    "description": "JSON string of the resource policy or resource policy document, which can be up to 5kb in size.",
+    "detection_method": "description_phrase"
+  }
+]

@@ -43,8 +43,10 @@ type crdProperty struct {
 	Properties  map[string]crdProperty `yaml:"properties"`
 }
 
-// ParseCRDFile parses a single CRD YAML file and returns all string fields
-// found under spec.properties that match the document-string heuristics.
+// ParseCRDFile parses a single CRD YAML file and returns ALL string fields
+// found under spec.properties. No heuristic filtering is applied — the caller
+// (matcher) cross-references against Terraform's JSON field list to determine
+// which fields are document-string candidates.
 func (p *CRDParser) ParseCRDFile(filePath string) ([]types.GoField, string, error) {
 	data, err := os.ReadFile(filePath)
 	if err != nil {
@@ -80,7 +82,6 @@ func (p *CRDParser) ParseCRDFile(filePath string) ([]types.GoField, string, erro
 		return nil, resourceName, nil
 	}
 
-	goParser := &GoASTParser{}
 	var fields []types.GoField
 
 	for fieldName, prop := range specProps {
@@ -91,11 +92,6 @@ func (p *CRDParser) ParseCRDFile(filePath string) ([]types.GoField, string, erro
 
 		// Convert JSON field name to CamelCase for matching with generator.yaml
 		camelName := jsonToCamel(fieldName)
-
-		// Check if field name matches heuristic
-		if !goParser.MatchesHeuristic(camelName) {
-			continue
-		}
 
 		fields = append(fields, types.GoField{
 			StructName: resourceName,
