@@ -56,6 +56,7 @@ func runScan(cmd *cobra.Command, args []string) error {
 
 	// Step 3: Set up cache and parsers
 	repoCache := cache.NewRepoCache(cacheDir)
+	crdParser := &parser.CRDParser{}
 	goParser := &parser.GoASTParser{}
 	genParser := &parser.GeneratorParser{}
 
@@ -74,18 +75,24 @@ func runScan(cmd *cobra.Command, args []string) error {
 			continue
 		}
 
-		// Find the latest API version directory
-		typesFile, err := findTypesFile(repoDir)
+		// Parse CRD YAML files for string fields under spec (preferred method).
+		// Falls back to Go AST parsing of types.go if no CRDs found.
+		fields, err := crdParser.ParseAllCRDs(repoDir)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Warning: %s — skipping %s\n", err.Error(), ctrl.RepoName)
-			continue
-		}
-
-		// Parse types.go for *string fields matching heuristics
-		fields, err := goParser.ParseTypesFile(typesFile)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Warning: failed to parse types.go in %s: %v\n", ctrl.RepoName, err)
-			continue
+			if verbose {
+				fmt.Fprintf(os.Stderr, "  No CRDs found for %s, falling back to types.go\n", ctrl.RepoName)
+			}
+			// Fallback: parse types.go
+			typesFile, err := findTypesFile(repoDir)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Warning: %s — skipping %s\n", err.Error(), ctrl.RepoName)
+				continue
+			}
+			fields, err = goParser.ParseTypesFile(typesFile)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Warning: failed to parse types.go in %s: %v\n", ctrl.RepoName, err)
+				continue
+			}
 		}
 
 		// Parse generator.yaml for existing annotations

@@ -98,7 +98,7 @@ func runReport(cmd *cobra.Command, args []string) error {
 }
 
 // executeACKScan executes the full ACK controller scan pipeline and returns the
-// scan results. It discovers controllers, clones/fetches repos, parses types
+// scan results. It discovers controllers, clones/fetches repos, parses CRDs
 // and generator configs, and classifies fields.
 func executeACKScan(ctx context.Context) ([]types.ScanResult, error) {
 	ghClient := GetGitHubClient(ctx)
@@ -110,6 +110,7 @@ func executeACKScan(ctx context.Context) ([]types.ScanResult, error) {
 	}
 
 	repoCache := cache.NewRepoCache(cacheDir)
+	crdParser := &parser.CRDParser{}
 	goParser := &parser.GoASTParser{}
 	genParser := &parser.GeneratorParser{}
 
@@ -126,16 +127,23 @@ func executeACKScan(ctx context.Context) ([]types.ScanResult, error) {
 			continue
 		}
 
-		typesFile, err := findTypesFile(repoDir)
+		// Parse CRD YAML files for string fields under spec (preferred).
+		// Falls back to Go AST parsing if no CRDs found.
+		fields, err := crdParser.ParseAllCRDs(repoDir)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Warning: %s — skipping %s\n", err.Error(), ctrl.RepoName)
-			continue
-		}
-
-		fields, err := goParser.ParseTypesFile(typesFile)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Warning: failed to parse types.go in %s: %v\n", ctrl.RepoName, err)
-			continue
+			if verbose {
+				fmt.Fprintf(os.Stderr, "    No CRDs found, falling back to types.go\n")
+			}
+			typesFile, err := findTypesFile(repoDir)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Warning: %s — skipping %s\n", err.Error(), ctrl.RepoName)
+				continue
+			}
+			fields, err = goParser.ParseTypesFile(typesFile)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Warning: failed to parse types.go in %s: %v\n", ctrl.RepoName, err)
+				continue
+			}
 		}
 
 		generatorPath := filepath.Join(repoDir, "generator.yaml")
