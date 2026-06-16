@@ -60,8 +60,11 @@ func TestMatch_CategoryAssignment(t *testing.T) {
 
 	// Expected: 3 results (annotated IAM, confirmed SNS, terraform-only lambda)
 	// EKS ConfigurationValues is excluded — no TF match and not annotated
-	if len(results) != 3 {
-		t.Fatalf("expected 3 results, got %d: %+v", len(results), results)
+	// Lambda terraform-only appears because lambda is an ACK service (has ackFields)
+	// Wait — lambda has no ACK fields in this test, so it should also be excluded.
+	// Only IAM and SNS have ACK fields here.
+	if len(results) != 2 {
+		t.Fatalf("expected 2 results, got %d: %+v", len(results), results)
 	}
 
 	// Verify category assignments
@@ -80,9 +83,9 @@ func TestMatch_CategoryAssignment(t *testing.T) {
 		t.Errorf("sns/FilterPolicy: expected %s, got %s", types.CategoryGapConfirmed, cat)
 	}
 
-	// Lambda policy is in Terraform but not in ACK → terraform_only
-	if cat := categoryMap["lambda/policy"]; cat != types.CategoryTerraformOnly {
-		t.Errorf("lambda/policy: expected %s, got %s", types.CategoryTerraformOnly, cat)
+	// Lambda terraform-only is excluded because lambda has no ACK controller fields
+	if _, exists := categoryMap["lambda/policy"]; exists {
+		t.Error("lambda/policy should not appear — lambda has no ACK fields in this test")
 	}
 
 	// EKS ConfigurationValues should NOT appear (no TF match, not annotated)
@@ -253,7 +256,7 @@ func TestMatch_EmptyInputs(t *testing.T) {
 		t.Errorf("expected 0 results for nil inputs, got %d", len(results))
 	}
 
-	// Empty ACK, some TF
+	// Empty ACK, some TF — terraform-only excluded because no ACK service exists
 	tfFields := []types.TerraformField{
 		{
 			ServiceName:     "iam",
@@ -264,11 +267,8 @@ func TestMatch_EmptyInputs(t *testing.T) {
 		},
 	}
 	results = m.Match(nil, tfFields)
-	if len(results) != 1 {
-		t.Fatalf("expected 1 terraform_only result, got %d", len(results))
-	}
-	if results[0].Category != types.CategoryTerraformOnly {
-		t.Errorf("expected terraform_only, got %s", results[0].Category)
+	if len(results) != 0 {
+		t.Fatalf("expected 0 results (no ACK services to match against), got %d", len(results))
 	}
 
 	// Some ACK, empty TF — unannotated fields with no TF match are excluded

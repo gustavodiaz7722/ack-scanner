@@ -522,7 +522,7 @@ func TestProperty14_AnnotatedAlwaysClassifiedCorrectly(t *testing.T) {
 }
 
 // TestProperty14_TerraformOnlyClassification verifies that TF fields without any
-// matching ACK field get terraform_only category.
+// matching ACK field get terraform_only category, provided the service has an ACK controller.
 func TestProperty14_TerraformOnlyClassification(t *testing.T) {
 	// Feature: ack-scanner, Property 14: Category assignment determinism
 	rapid.Check(t, func(t *rapid.T) {
@@ -530,19 +530,19 @@ func TestProperty14_TerraformOnlyClassification(t *testing.T) {
 		tfField := genFieldName().Draw(t, "tfField")
 		snakeTfField := CamelToSnake(tfField)
 
-		// Use a completely different service for ACK fields to ensure no match
-		ackService := tfService + "diff"
-		ackField := genFieldName().Draw(t, "ackField")
+		// Create an ACK field in the SAME service (so the service is known)
+		// but with a completely different field name (so there's no match)
+		ackField := "UnrelatedFieldXyz"
 
 		ackFields := []types.ScanResult{
 			{
-				ServiceName:    ackService,
-				RepoName:       ackService + "-controller",
+				ServiceName:    tfService,
+				RepoName:       tfService + "-controller",
 				ResourceName:   "Resource",
 				FieldName:      ackField,
 				FieldPath:      "Spec." + ackField,
 				GoType:         "*string",
-				AnnotationType: types.AnnotationNone,
+				AnnotationType: types.AnnotationDocument, // annotated so it appears
 			},
 		}
 

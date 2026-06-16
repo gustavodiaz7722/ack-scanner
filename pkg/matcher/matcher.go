@@ -108,6 +108,12 @@ func (m *Matcher) Match(ackFields []types.ScanResult, tfFields []types.Terraform
 	}
 
 	// Step 3: Add Terraform-only fields (not matched to any ACK field)
+	// Only include terraform-only entries for services that have an ACK controller.
+	ackServices := make(map[string]bool)
+	for _, ack := range ackFields {
+		ackServices[strings.ToLower(ack.ServiceName)] = true
+	}
+
 	for _, tf := range tfFields {
 		key := lookupKey{
 			service: strings.ToLower(tf.ServiceName),
@@ -116,8 +122,12 @@ func (m *Matcher) Match(ackFields []types.ScanResult, tfFields []types.Terraform
 		if matchedTFKeys[key] {
 			continue
 		}
-		// Check if any ACK field matched this TF field via similar-field logic
+		// Skip services that don't have an ACK controller
 		svc := strings.ToLower(tf.ServiceName)
+		if !ackServices[svc] {
+			continue
+		}
+		// Check if any ACK field matched this TF field via similar-field logic
 		tfNorm := NormalizeFieldName(tf.FieldName)
 		ackMatched := false
 		for _, ack := range ackFields {
