@@ -128,7 +128,8 @@ resource "aws_iam_role" "example" {
 `
 
 	p := &TerraformParser{}
-	fields := p.ExtractJsonEncodeFields(content)
+	// When targeting aws_iam_role, both fields should be detected
+	fields := p.ExtractJsonEncodeFields(content, "aws_iam_role")
 
 	fieldSet := make(map[string]struct{})
 	for _, f := range fields {
@@ -146,6 +147,37 @@ resource "aws_iam_role" "example" {
 	}
 }
 
+func TestExtractJsonEncodeFields_IgnoresOtherResources(t *testing.T) {
+	content := `## Example Usage
+
+` + "```hcl" + `
+resource "aws_iam_role" "example" {
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+  })
+}
+
+resource "aws_eks_addon" "example" {
+  addon_name   = "vpc-cni"
+  cluster_name = aws_eks_cluster.example.name
+}
+` + "```" + `
+
+## Argument Reference
+`
+
+	p := &TerraformParser{}
+	// When targeting aws_eks_addon, assume_role_policy should NOT be detected
+	// because it's in the aws_iam_role block, not aws_eks_addon
+	fields := p.ExtractJsonEncodeFields(content, "aws_eks_addon")
+
+	for _, f := range fields {
+		if f == "assume_role_policy" {
+			t.Error("assume_role_policy should not be detected when targeting aws_eks_addon")
+		}
+	}
+}
+
 func TestExtractJsonEncodeFields_NoExampleSection(t *testing.T) {
 	content := `## Argument Reference
 
@@ -155,7 +187,7 @@ func TestExtractJsonEncodeFields_NoExampleSection(t *testing.T) {
 `
 
 	p := &TerraformParser{}
-	fields := p.ExtractJsonEncodeFields(content)
+	fields := p.ExtractJsonEncodeFields(content, "aws_test_resource")
 
 	if len(fields) != 0 {
 		t.Errorf("expected 0 fields for content without Example Usage, got %d", len(fields))

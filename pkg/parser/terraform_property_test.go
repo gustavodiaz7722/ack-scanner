@@ -159,6 +159,7 @@ func TestExtractJsonEncodeFields_FindsJsonencode(t *testing.T) {
 		fieldName := genSnakeCaseFieldName().Draw(t, "fieldName")
 
 		// Construct a Terraform doc with an Example Usage section containing jsonencode
+		// The resource type matches the expected type so it gets picked up
 		content := fmt.Sprintf(`## Example Usage
 
 `+"```"+`hcl
@@ -174,7 +175,7 @@ resource "aws_test_resource" "example" {
 `, fieldName)
 
 		parser := &TerraformParser{}
-		fields := parser.ExtractJsonEncodeFields(content)
+		fields := parser.ExtractJsonEncodeFields(content, "aws_test_resource")
 
 		found := false
 		for _, f := range fields {
@@ -210,7 +211,7 @@ resource "aws_test_resource" "example" {
 `, fieldName)
 
 		parser := &TerraformParser{}
-		fields := parser.ExtractJsonEncodeFields(content)
+		fields := parser.ExtractJsonEncodeFields(content, "aws_test_resource")
 
 		found := false
 		for _, f := range fields {
@@ -243,7 +244,7 @@ The %s field uses jsonencode to set the value.
 `, fieldName, fieldName)
 
 		parser := &TerraformParser{}
-		fields := parser.ExtractJsonEncodeFields(content)
+		fields := parser.ExtractJsonEncodeFields(content, "aws_test_resource")
 
 		for _, f := range fields {
 			if f == fieldName {

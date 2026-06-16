@@ -85,13 +85,23 @@ func (p *TerraformParser) ExtractArguments(content string) []argumentEntry {
 	return entries
 }
 
+// resourceBlockPattern matches HCL resource block declarations like:
+//
+//	resource "aws_eks_addon" "example" {
+var resourceBlockPattern = regexp.MustCompile(`^\s*resource\s+"([^"]+)"\s+"[^"]+"\s*\{`)
+
 // ExtractJsonEncodeFields parses "## Example Usage" code blocks and returns
 // field names assigned via jsonencode(...) or data.aws_iam_policy_document.*.json.
-func (p *TerraformParser) ExtractJsonEncodeFields(content string) []string {
+// It only extracts fields from resource blocks matching the expected resource type
+// (derived from the doc filename), preventing false positives from supporting
+// resources like aws_iam_role that commonly appear in examples.
+func (p *TerraformParser) ExtractJsonEncodeFields(content string, expectedResourceType string) []string {
 	fieldSet := make(map[string]struct{})
 
 	inExampleSection := false
 	inCodeBlock := false
+	inMatchingResource := false
+	braceDepth := 0
 	scanner := bufio.NewScanner(strings.NewReader(content))
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -115,10 +125,44 @@ func (p *TerraformParser) ExtractJsonEncodeFields(content string) []string {
 		trimmed := strings.TrimSpace(line)
 		if strings.HasPrefix(trimmed, "```") {
 			inCodeBlock = !inCodeBlock
+			if !inCodeBlock {
+				// Reset resource tracking when code block ends
+				inMatchingResource = false
+				braceDepth = 0
+			}
 			continue
 		}
 
 		if !inCodeBlock {
+			continue
+		}
+
+		// Check for resource block declaration
+		if matches := resourceBlockPattern.FindStringSubmatch(line); matches != nil {
+			resourceType := matches[1] // e.g., "aws_eks_addon"
+			inMatchingResource = (resourceType == expectedResourceType)
+			braceDepth = 1
+			continue
+		}
+
+		// Track brace depth to know when we exit a resource block
+		if inMatchingResource || braceDepth > 0 {
+			for _, ch := range line {
+				if ch == '{' {
+					braceDepth++
+				} else if ch == '}' {
+					braceDepth--
+					if braceDepth <= 0 {
+						inMatchingResource = false
+						braceDepth = 0
+						break
+					}
+				}
+			}
+		}
+
+		// Only extract from the matching resource block
+		if !inMatchingResource {
 			continue
 		}
 
@@ -170,8 +214,10 @@ func (p *TerraformParser) ParseResourceDoc(filePath string) ([]types.TerraformFi
 	// Extract arguments from Argument Reference section
 	args := p.ExtractArguments(content)
 
-	// Extract fields used with jsonencode in examples
-	jsonencodeFields := p.ExtractJsonEncodeFields(content)
+	// Extract fields used with jsonencode in examples — only from the
+	// resource block matching this doc's resource type
+	expectedResourceType := "aws_" + service + "_" + resource
+	jsonencodeFields := p.ExtractJsonEncodeFields(content, expectedResourceType)
 	jsonencodeSet := make(map[string]struct{}, len(jsonencodeFields))
 	for _, f := range jsonencodeFields {
 		jsonencodeSet[f] = struct{}{}
