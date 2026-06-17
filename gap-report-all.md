@@ -4,32 +4,36 @@
 
 | Metric | Count |
 | --- | --- |
-| Total Fields | 179 |
+| Total Fields | 186 |
 | Already Annotated | 10 |
-| Gaps (Terraform Confirmed) | 29 |
+| Gaps (Terraform Confirmed) | 48 |
 | Gaps (Unconfirmed) | 0 |
-| Terraform Only | 140 |
+| Terraform Only | 128 |
 
 ## Priority Services
 
 | Service | Confirmed Gaps |
 | --- | --- |
+| sagemaker | 10 |
 | sns | 6 |
 | ecr | 4 |
+| dms | 3 |
+| pipes | 3 |
 | wafv2 | 3 |
 | cloudwatch | 2 |
 | glue | 2 |
+| lambda | 2 |
 | sqs | 2 |
-| dms | 1 |
+| ssm | 2 |
+| apigatewayv2 | 1 |
 | dynamodb | 1 |
+| ecs | 1 |
 | efs | 1 |
 | iam | 1 |
 | kinesis | 1 |
 | kms | 1 |
 | opensearchserverless | 1 |
 | ram | 1 |
-| sagemaker | 1 |
-| ssm | 1 |
 
 ## acmpca
 
@@ -41,8 +45,8 @@
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
+| Authorizer | ⚠️ Issuer | none | Yes | Gap (Confirmed) |
 | model | content_type | none | N/A | Terraform Only |
-| authorizer | issuer | none | N/A | Terraform Only |
 | model | schema | none | N/A | Terraform Only |
 
 ## autoscaling
@@ -110,10 +114,10 @@
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | Endpoint | ⚠️ ExternalTableDefinition | none | Yes | Gap (Confirmed) |
-| endpoint | message_format | none | N/A | Terraform Only |
+| Endpoint | ⚠️ MessageFormat | none | Yes | Gap (Confirmed) |
+| Endpoint | ⚠️ SpatialDataOptionToGeoJSONFunctionName | none | Yes | Gap (Confirmed) |
 | replication_config | replication_settings | none | N/A | Terraform Only |
 | replication_task | replication_task_settings | none | N/A | Terraform Only |
-| endpoint | spatial_data_option_to_geo_json_function_name | none | N/A | Terraform Only |
 | replication_config | supplemental_settings | none | N/A | Terraform Only |
 | replication_config | table_mappings | none | N/A | Terraform Only |
 | replication_task | table_mappings | none | N/A | Terraform Only |
@@ -151,9 +155,9 @@
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
+| Service | ⚠️ LogDriver | none | Yes | Gap (Confirmed) |
 | task_definition | container_definitions | none | N/A | Terraform Only |
 | service | format | none | N/A | Terraform Only |
-| daemon_task_definition | log_driver | none | N/A | Terraform Only |
 
 ## efs
 
@@ -219,10 +223,10 @@
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| event_source_mapping | event_record_format | none | N/A | Terraform Only |
+| EventSourceMapping | ⚠️ EventRecordFormat | none | Yes | Gap (Confirmed) |
+| Function | ⚠️ LogFormat | none | Yes | Gap (Confirmed) |
 | invocation | input | none | N/A | Terraform Only |
 | invocation | lifecycle_scope | none | N/A | Terraform Only |
-| function | log_format | none | N/A | Terraform Only |
 | event_source_mapping | pattern | none | N/A | Terraform Only |
 | invocation | terraform_key | none | N/A | Terraform Only |
 
@@ -262,11 +266,11 @@
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| pipe | input_template | none | N/A | Terraform Only |
+| Pipe | ⚠️ InputTemplate | none | Yes | Gap (Confirmed) |
+| Pipe | ⚠️ Time | none | Yes | Gap (Confirmed) |
+| Pipe | ⚠️ Timestamp | none | Yes | Gap (Confirmed) |
 | pipe | output_format | none | N/A | Terraform Only |
 | pipe | pattern | none | N/A | Terraform Only |
-| pipe | time | none | N/A | Terraform Only |
-| pipe | timestamp | none | N/A | Terraform Only |
 
 ## quicksight
 
@@ -330,9 +334,17 @@
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
+| ModelPackage | ⚠️ ContentDigest | none | Yes | Gap (Confirmed) |
+| ModelPackage | ⚠️ ContentType | none | Yes | Gap (Confirmed) |
+| TransformJob | ⚠️ ContentType | none | Yes | Gap (Confirmed) |
 | Pipeline | ⚠️ PipelineDefinition | none | Yes | Gap (Confirmed) |
+| DataQualityJobDefinition | ⚠️ PostAnalyticsProcessorSourceURI | none | Yes | Gap (Confirmed) |
+| ModelQualityJobDefinition | ⚠️ PostAnalyticsProcessorSourceURI | none | Yes | Gap (Confirmed) |
+| MonitoringSchedule | ⚠️ PostAnalyticsProcessorSourceURI | none | Yes | Gap (Confirmed) |
+| DataQualityJobDefinition | ⚠️ RecordPreprocessorSourceURI | none | Yes | Gap (Confirmed) |
+| ModelQualityJobDefinition | ⚠️ RecordPreprocessorSourceURI | none | Yes | Gap (Confirmed) |
+| MonitoringSchedule | ⚠️ RecordPreprocessorSourceURI | none | Yes | Gap (Confirmed) |
 | algorithm | attribute_names | none | N/A | Terraform Only |
-| model_card | content | none | N/A | Terraform Only |
 | endpoint_configuration | csv_content_types | none | N/A | Terraform Only |
 | flow_definition | human_loop_activation_conditions | none | N/A | Terraform Only |
 | data_quality_job_definition | json | none | N/A | Terraform Only |
@@ -341,7 +353,6 @@
 | workforce | jwks_uri | none | N/A | Terraform Only |
 | data_quality_job_definition | line | none | N/A | Terraform Only |
 | monitoring_schedule | line | none | N/A | Terraform Only |
-| data_quality_job_definition | record_preprocessor_source_uri | none | N/A | Terraform Only |
 | model_package_group_policy | resource_policy | none | N/A | Terraform Only |
 
 ## secretsmanager
@@ -384,8 +395,8 @@
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | Document | ⚠️ Content | none | Yes | Gap (Confirmed) |
+| ResourceDataSync | ⚠️ SyncFormat | none | Yes | Gap (Confirmed) |
 | maintenance_window_task | payload | none | N/A | Terraform Only |
-| resource_data_sync | sync_format | none | N/A | Terraform Only |
 
 ## wafv2
 

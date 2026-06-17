@@ -44,9 +44,10 @@ type crdProperty struct {
 }
 
 // ParseCRDFile parses a single CRD YAML file and returns ALL string fields
-// found under spec.properties. No heuristic filtering is applied — the caller
-// (matcher) cross-references against Terraform's JSON field list to determine
-// which fields are document-string candidates.
+// found under spec, recursively traversing nested objects. No heuristic
+// filtering is applied — the caller (matcher) cross-references against
+// Terraform's JSON field list to determine which fields are document-string
+// candidates.
 func (p *CRDParser) ParseCRDFile(filePath string) ([]types.GoField, string, error) {
 	data, err := os.ReadFile(filePath)
 	if err != nil {
@@ -83,26 +84,71 @@ func (p *CRDParser) ParseCRDFile(filePath string) ([]types.GoField, string, erro
 	}
 
 	var fields []types.GoField
+	collectStringFields(specProps, resourceName, resourceName, &fields)
 
-	for fieldName, prop := range specProps {
-		// Only grab direct string fields under spec (not nested objects)
-		if prop.Type != "string" {
-			continue
-		}
-
-		// Convert JSON field name to CamelCase for matching with generator.yaml
-		camelName := jsonToCamel(fieldName)
-
-		fields = append(fields, types.GoField{
-			StructName: resourceName,
-			FieldName:  camelName,
-			FieldPath:  resourceName + "." + camelName,
-			GoType:     "*string",
-			JSONTag:    fieldName,
-		})
-	}
+	// Deduplicate by (StructName, FieldName). The same leaf field name can
+	// appear at many nesting levels in complex CRDs (e.g., ContentType in
+	// sagemaker ModelPackage appears 18 times). For matching against
+	// Terraform's flat field names, we only need one entry per unique
+	// (resource, field) pair. Keep the shortest path as the representative.
+	fields = deduplicateFields(fields)
 
 	return fields, resourceName, nil
+}
+
+// deduplicateFields removes duplicate entries that share the same
+// (StructName, FieldName) pair, keeping the entry with the shortest FieldPath
+// as the canonical representative.
+func deduplicateFields(fields []types.GoField) []types.GoField {
+	type key struct {
+		structName string
+		fieldName  string
+	}
+	seen := make(map[key]int) // maps to index in result slice
+	var result []types.GoField
+
+	for _, f := range fields {
+		k := key{structName: f.StructName, fieldName: f.FieldName}
+		if idx, exists := seen[k]; exists {
+			// Keep the shorter path (closer to spec root)
+			if len(f.FieldPath) < len(result[idx].FieldPath) {
+				result[idx] = f
+			}
+		} else {
+			seen[k] = len(result)
+			result = append(result, f)
+		}
+	}
+	return result
+}
+
+// collectStringFields recursively traverses CRD properties and collects all
+// string fields at any nesting depth. For each string field found, it records
+// the leaf field name (CamelCase) and the full dot-separated path from the
+// resource root. This ensures deeply nested fields like
+// spec.amazonManagedKafkaEventSourceConfig.schemaRegistryConfig.eventRecordFormat
+// are captured and available for matching against Terraform fields.
+func collectStringFields(props map[string]crdProperty, resourceName string, pathPrefix string, fields *[]types.GoField) {
+	for fieldName, prop := range props {
+		camelName := jsonToCamel(fieldName)
+		fieldPath := pathPrefix + "." + camelName
+
+		switch prop.Type {
+		case "string":
+			*fields = append(*fields, types.GoField{
+				StructName: resourceName,
+				FieldName:  camelName,
+				FieldPath:  fieldPath,
+				GoType:     "*string",
+				JSONTag:    fieldName,
+			})
+		case "object":
+			// Recurse into nested object properties
+			if prop.Properties != nil {
+				collectStringFields(prop.Properties, resourceName, fieldPath, fields)
+			}
+		}
+	}
 }
 
 // ParseAllCRDs parses all CRD YAML files in config/crd/bases/ for a given

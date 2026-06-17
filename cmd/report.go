@@ -19,6 +19,7 @@ import (
 )
 
 var reportServicesFilter string
+var reportGapsOnly bool
 
 var reportCmd = &cobra.Command{
 	Use:   "report",
@@ -46,6 +47,7 @@ The default output format for the report command is markdown.`,
 
 func init() {
 	reportCmd.Flags().StringVar(&reportServicesFilter, "services", "", "comma-separated list of service names to include in the report (default: all)")
+	reportCmd.Flags().BoolVar(&reportGapsOnly, "gaps-only", false, "only include Terraform-confirmed gaps in the report")
 	rootCmd.AddCommand(reportCmd)
 }
 
@@ -88,11 +90,16 @@ func runReport(cmd *cobra.Command, args []string) error {
 		matchResults = m.FilterByServices(matchResults, services)
 	}
 
+	// Step 5: Apply gaps-only filter if specified.
+	if reportGapsOnly {
+		matchResults = filterGapsOnly(matchResults)
+	}
+
 	if verbose {
 		fmt.Fprintf(os.Stderr, "Report generated in %s\n", time.Since(start).Round(time.Millisecond))
 	}
 
-	// Step 5: Generate report output.
+	// Step 6: Generate report output.
 	rep := reporter.NewReporter(outputFormat)
 	return rep.GenerateReport(matchResults, os.Stdout)
 }
@@ -194,4 +201,15 @@ func parseServicesList(filter string) []string {
 		}
 	}
 	return services
+}
+
+// filterGapsOnly returns only results with category gap_confirmed_by_terraform.
+func filterGapsOnly(results []types.MatchResult) []types.MatchResult {
+	var filtered []types.MatchResult
+	for _, r := range results {
+		if r.Category == types.CategoryGapConfirmed {
+			filtered = append(filtered, r)
+		}
+	}
+	return filtered
 }
