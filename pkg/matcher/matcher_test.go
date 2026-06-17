@@ -401,3 +401,100 @@ func TestFilterByServices_CaseInsensitive(t *testing.T) {
 		t.Errorf("expected IAM, got %s", filtered[0].ServiceName)
 	}
 }
+
+func TestMatch_SingleSegmentSuffixDoesNotFalsePositive(t *testing.T) {
+	m := &Matcher{}
+
+	// Simulates wafv2 IPSet with a "Scope" field that should NOT match
+	// Terraform's "match_scope" (which is about JSON body inspection scope,
+	// a completely different field semantically).
+	ackFields := []types.ScanResult{
+		{
+			ServiceName:    "wafv2",
+			RepoName:       "wafv2-controller",
+			ResourceName:   "IPSet",
+			FieldName:      "Scope",
+			FieldPath:      "IPSet.Scope",
+			GoType:         "*string",
+			AnnotationType: types.AnnotationNone,
+		},
+		{
+			ServiceName:    "wafv2",
+			RepoName:       "wafv2-controller",
+			ResourceName:   "RuleGroup",
+			FieldName:      "Scope",
+			FieldPath:      "RuleGroup.Scope",
+			GoType:         "*string",
+			AnnotationType: types.AnnotationNone,
+		},
+	}
+
+	tfFields := []types.TerraformField{
+		{
+			ServiceName:     "wafv2",
+			ResourceType:    "rule_group",
+			FieldName:       "match_scope",
+			Description:     "The parts of the JSON to inspect",
+			DetectionMethod: types.DetectDescriptionPhrase,
+		},
+		{
+			ServiceName:     "wafv2",
+			ResourceType:    "rule_group",
+			FieldName:       "json_body",
+			Description:     "Inspect the request body as JSON",
+			DetectionMethod: types.DetectDescriptionPhrase,
+		},
+	}
+
+	results := m.Match(ackFields, tfFields)
+
+	// ACK "Scope" should NOT match Terraform "match_scope" (single-segment suffix).
+	// Since Scope has no exact TF match and is not annotated, it should be excluded entirely.
+	for _, r := range results {
+		if r.FieldName == "Scope" && r.Category == types.CategoryGapConfirmed {
+			t.Errorf("Scope should NOT be a confirmed gap (false positive via match_scope): %+v", r)
+		}
+	}
+}
+
+func TestMatch_MultiSegmentSuffixStillMatches(t *testing.T) {
+	m := &Matcher{}
+
+	// Ensure multi-segment suffix matching still works correctly.
+	// ACK "AssumeRolePolicyDocument" should match TF "assume_role_policy"
+	// because "assume_role_policy" is a prefix of "assume_role_policy_document".
+	ackFields := []types.ScanResult{
+		{
+			ServiceName:    "iam",
+			RepoName:       "iam-controller",
+			ResourceName:   "Role",
+			FieldName:      "AssumeRolePolicyDocument",
+			FieldPath:      "Role.AssumeRolePolicyDocument",
+			GoType:         "*string",
+			AnnotationType: types.AnnotationNone,
+		},
+	}
+
+	tfFields := []types.TerraformField{
+		{
+			ServiceName:     "iam",
+			ResourceType:    "role",
+			FieldName:       "assume_role_policy",
+			Description:     "The policy that grants an entity permission to assume the role",
+			DetectionMethod: types.DetectJsonEncodeExample,
+		},
+	}
+
+	results := m.Match(ackFields, tfFields)
+
+	found := false
+	for _, r := range results {
+		if r.FieldName == "AssumeRolePolicyDocument" && r.Category == types.CategoryGapConfirmed {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Error("AssumeRolePolicyDocument should match assume_role_policy via prefix rule")
+	}
+}

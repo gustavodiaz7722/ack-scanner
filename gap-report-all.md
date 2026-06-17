@@ -4,11 +4,11 @@
 
 | Metric | Count |
 | --- | --- |
-| Total Fields | 186 |
+| Total Fields | 187 |
 | Already Annotated | 10 |
-| Gaps (Terraform Confirmed) | 48 |
+| Gaps (Terraform Confirmed) | 41 |
 | Gaps (Unconfirmed) | 0 |
-| Terraform Only | 128 |
+| Terraform Only | 136 |
 
 ## Priority Services
 
@@ -19,18 +19,14 @@
 | ecr | 4 |
 | dms | 3 |
 | pipes | 3 |
-| wafv2 | 3 |
 | cloudwatch | 2 |
-| glue | 2 |
 | lambda | 2 |
 | sqs | 2 |
 | ssm | 2 |
 | apigatewayv2 | 1 |
-| dynamodb | 1 |
 | ecs | 1 |
 | efs | 1 |
 | iam | 1 |
-| kinesis | 1 |
 | kms | 1 |
 | opensearchserverless | 1 |
 | ram | 1 |
@@ -132,8 +128,8 @@
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| Table | ⚠️ ResourcePolicy | none | Yes | Gap (Confirmed) |
 | table_item | item | none | N/A | Terraform Only |
+| resource_policy | policy | none | N/A | Terraform Only |
 | resource_policy | resource_arn | none | N/A | Terraform Only |
 
 ## ecr
@@ -176,15 +172,15 @@
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| Job | ⚠️ SecurityConfiguration | none | Yes | Gap (Confirmed) |
-| Job | ⚠️ WorkerType | none | Yes | Gap (Confirmed) |
 | connection | SparkProperties | none | N/A | Terraform Only |
 | classifier | classification | none | N/A | Terraform Only |
+| crawler | configuration | none | N/A | Terraform Only |
 | connection | connection_type | none | N/A | Terraform Only |
 | schema | data_format | none | N/A | Terraform Only |
 | catalog_table | initial_default | none | N/A | Terraform Only |
 | classifier | json_classifier | none | N/A | Terraform Only |
 | classifier | json_path | none | N/A | Terraform Only |
+| catalog_table | type | none | N/A | Terraform Only |
 | catalog_table | write_default | none | N/A | Terraform Only |
 
 ## iam
@@ -198,7 +194,6 @@
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| Stream | ⚠️ Name | none | Yes | Gap (Confirmed) |
 | firehose_delivery_stream | case_insensitive | none | N/A | Terraform Only |
 | firehose_delivery_stream | column_to_json_key_mappings | none | N/A | Terraform Only |
 | firehose_delivery_stream | convert_dots_in_json_keys_to_underscores | none | N/A | Terraform Only |
@@ -209,6 +204,7 @@
 | firehose_delivery_stream | input_format_configuration | none | N/A | Terraform Only |
 | analytics_application | json | none | N/A | Terraform Only |
 | firehose_delivery_stream | open_x_json_ser_de | none | N/A | Terraform Only |
+| firehose_delivery_stream | parameter_name | none | N/A | Terraform Only |
 | resource_policy | policy | none | N/A | Terraform Only |
 | analytics_application | record_format_type | none | N/A | Terraform Only |
 | firehose_delivery_stream | timestamp_formats | none | N/A | Terraform Only |
@@ -381,6 +377,7 @@
 | Subscription | ⚠️ RedrivePolicy | none | Yes | Gap (Confirmed) |
 | Subscription | FilterPolicy | is_document | N/A | Annotated |
 | Topic | Policy | is_iam_policy | N/A | Annotated |
+| topic_subscription | replay_policy | none | N/A | Terraform Only |
 
 ## sqs
 
@@ -402,9 +399,6 @@
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| IPSet | ⚠️ Scope | none | Yes | Gap (Confirmed) |
-| RuleGroup | ⚠️ Scope | none | Yes | Gap (Confirmed) |
-| WebACL | ⚠️ Scope | none | Yes | Gap (Confirmed) |
 | web_acl_rule | all | none | N/A | Terraform Only |
 | rule_group | content_type | none | N/A | Terraform Only |
 | web_acl | content_type | none | N/A | Terraform Only |
@@ -423,6 +417,9 @@
 | rule_group | match_pattern | none | N/A | Terraform Only |
 | web_acl | match_pattern | none | N/A | Terraform Only |
 | web_acl_rule | match_pattern | none | N/A | Terraform Only |
+| rule_group | match_scope | none | N/A | Terraform Only |
+| web_acl | match_scope | none | N/A | Terraform Only |
+| web_acl_rule | match_scope | none | N/A | Terraform Only |
 | web_acl_rule_group_association | payload_type | none | N/A | Terraform Only |
 | rule_group | rules_json | none | N/A | Terraform Only |
 

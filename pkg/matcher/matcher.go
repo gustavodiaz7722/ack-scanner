@@ -205,17 +205,15 @@ func isSimilarField(a, b string) bool {
 	}
 
 	// Rule 2: b is a suffix of a at an underscore boundary
-	// Only if b has at least 2 segments (to avoid "policy" matching everything)
+	// Only if b has at least 2 segments to avoid single generic words like
+	// "scope", "name", "type", "policy" from matching unrelated compound names
+	// (e.g., "scope" should NOT match "match_scope" — different semantics).
 	if strings.HasSuffix(a, "_"+b) {
 		bSegments := strings.Count(b, "_") + 1
 		if bSegments >= 2 {
 			return true
 		}
-		// Single segment: only match if it's >= 50% of the longer name's segments
-		aSegments := strings.Count(a, "_") + 1
-		if aSegments <= 2 {
-			return true
-		}
+		// Single segment names are too ambiguous for suffix matching — skip.
 	}
 
 	// Rule 3: Shared suffix of at least 2 segments

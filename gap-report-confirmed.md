@@ -4,9 +4,9 @@
 
 | Metric | Count |
 | --- | --- |
-| Total Fields | 48 |
+| Total Fields | 41 |
 | Already Annotated | 0 |
-| Gaps (Terraform Confirmed) | 48 |
+| Gaps (Terraform Confirmed) | 41 |
 | Gaps (Unconfirmed) | 0 |
 | Terraform Only | 0 |
 
@@ -19,18 +19,14 @@
 | ecr | 4 |
 | dms | 3 |
 | pipes | 3 |
-| wafv2 | 3 |
 | cloudwatch | 2 |
-| glue | 2 |
 | lambda | 2 |
 | sqs | 2 |
 | ssm | 2 |
 | apigatewayv2 | 1 |
-| dynamodb | 1 |
 | ecs | 1 |
 | efs | 1 |
 | iam | 1 |
-| kinesis | 1 |
 | kms | 1 |
 | opensearchserverless | 1 |
 | ram | 1 |
@@ -56,12 +52,6 @@
 | Endpoint | ⚠️ MessageFormat | none | Yes | Gap (Confirmed) |
 | Endpoint | ⚠️ SpatialDataOptionToGeoJSONFunctionName | none | Yes | Gap (Confirmed) |
 
-## dynamodb
-
-| Resource | Field | Annotation | TF Confirmed | Category |
-| --- | --- | --- | --- | --- |
-| Table | ⚠️ ResourcePolicy | none | Yes | Gap (Confirmed) |
-
 ## ecr
 
 | Resource | Field | Annotation | TF Confirmed | Category |
@@ -83,24 +73,11 @@
 | --- | --- | --- | --- | --- |
 | FileSystem | ⚠️ Policy | none | Yes | Gap (Confirmed) |
 
-## glue
-
-| Resource | Field | Annotation | TF Confirmed | Category |
-| --- | --- | --- | --- | --- |
-| Job | ⚠️ SecurityConfiguration | none | Yes | Gap (Confirmed) |
-| Job | ⚠️ WorkerType | none | Yes | Gap (Confirmed) |
-
 ## iam
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | Policy | ⚠️ PolicyDocument | none | Yes | Gap (Confirmed) |
-
-## kinesis
-
-| Resource | Field | Annotation | TF Confirmed | Category |
-| --- | --- | --- | --- | --- |
-| Stream | ⚠️ Name | none | Yes | Gap (Confirmed) |
 
 ## kms
 
@@ -174,12 +151,4 @@
 | --- | --- | --- | --- | --- |
 | Document | ⚠️ Content | none | Yes | Gap (Confirmed) |
 | ResourceDataSync | ⚠️ SyncFormat | none | Yes | Gap (Confirmed) |
-
-## wafv2
-
-| Resource | Field | Annotation | TF Confirmed | Category |
-| --- | --- | --- | --- | --- |
-| IPSet | ⚠️ Scope | none | Yes | Gap (Confirmed) |
-| RuleGroup | ⚠️ Scope | none | Yes | Gap (Confirmed) |
-| WebACL | ⚠️ Scope | none | Yes | Gap (Confirmed) |
 

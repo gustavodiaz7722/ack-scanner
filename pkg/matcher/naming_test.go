@@ -120,3 +120,109 @@ func TestIsSnakeCase(t *testing.T) {
 		})
 	}
 }
+
+func TestIsSimilarField(t *testing.T) {
+	tests := []struct {
+		name     string
+		a        string
+		b        string
+		expected bool
+	}{
+		// Exact match
+		{
+			name:     "exact match",
+			a:        "policy",
+			b:        "policy",
+			expected: true,
+		},
+
+		// Rule 1: prefix at underscore boundary
+		{
+			name:     "prefix match - assume_role_policy is prefix of assume_role_policy_document",
+			a:        "assume_role_policy_document",
+			b:        "assume_role_policy",
+			expected: true,
+		},
+		{
+			name:     "prefix match reversed args",
+			a:        "assume_role_policy",
+			b:        "assume_role_policy_document",
+			expected: true,
+		},
+
+		// Rule 2: suffix at underscore boundary (multi-segment only)
+		{
+			name:     "multi-segment suffix match - policy_document suffix of assume_role_policy_document",
+			a:        "assume_role_policy_document",
+			b:        "policy_document",
+			expected: true,
+		},
+		{
+			name:     "single-segment suffix should NOT match - scope vs match_scope",
+			a:        "match_scope",
+			b:        "scope",
+			expected: false,
+		},
+		{
+			name:     "single-segment suffix should NOT match - name vs resource_name",
+			a:        "resource_name",
+			b:        "name",
+			expected: false,
+		},
+		{
+			name:     "single-segment suffix should NOT match - type vs content_type",
+			a:        "content_type",
+			b:        "type",
+			expected: false,
+		},
+		{
+			name:     "single-segment suffix should NOT match - policy vs redrive_policy",
+			a:        "redrive_policy",
+			b:        "policy",
+			expected: false,
+		},
+		{
+			name:     "single-segment suffix should NOT match - format vs output_format",
+			a:        "output_format",
+			b:        "format",
+			expected: false,
+		},
+
+		// Rule 3: shared suffix of at least 2 segments
+		{
+			name:     "shared 2-segment suffix - inline_policy_document and role_policy_document",
+			a:        "inline_policy_document",
+			b:        "role_policy_document",
+			expected: true,
+		},
+		{
+			name:     "shared 2-segment suffix - filter_policy_scope and subscription_policy_scope",
+			a:        "filter_policy_scope",
+			b:        "subscription_policy_scope",
+			expected: true,
+		},
+
+		// Should NOT match - completely different names
+		{
+			name:     "no match - completely different",
+			a:        "bucket_name",
+			b:        "policy_document",
+			expected: false,
+		},
+		{
+			name:     "no match - single shared segment suffix",
+			a:        "delivery_policy",
+			b:        "filter_policy",
+			expected: false,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			result := isSimilarField(tc.a, tc.b)
+			if result != tc.expected {
+				t.Errorf("isSimilarField(%q, %q) = %v, want %v", tc.a, tc.b, result, tc.expected)
+			}
+		})
+	}
+}
