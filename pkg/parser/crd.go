@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -154,18 +155,27 @@ func collectStringFields(props map[string]crdProperty, resourceName string, path
 // ParseAllCRDs parses all CRD YAML files in config/crd/bases/ for a given
 // repo directory and returns the combined set of heuristic-matching string fields.
 func (p *CRDParser) ParseAllCRDs(repoDir string) ([]types.GoField, error) {
+	fields, _, err := p.ParseAllCRDsWithResources(repoDir)
+	return fields, err
+}
+
+// ParseAllCRDsWithResources parses all CRD YAML files in config/crd/bases/ for
+// a given repo directory and returns both the string fields and the list of
+// resource kinds found across all CRDs.
+func (p *CRDParser) ParseAllCRDsWithResources(repoDir string) ([]types.GoField, []string, error) {
 	basesDir := filepath.Join(repoDir, "config", "crd", "bases")
 	pattern := filepath.Join(basesDir, "*.yaml")
 	files, err := filepath.Glob(pattern)
 	if err != nil {
-		return nil, fmt.Errorf("globbing CRD files in %s: %w", basesDir, err)
+		return nil, nil, fmt.Errorf("globbing CRD files in %s: %w", basesDir, err)
 	}
 
 	if len(files) == 0 {
-		return nil, fmt.Errorf("no CRD YAML files found in %s", basesDir)
+		return nil, nil, fmt.Errorf("no CRD YAML files found in %s", basesDir)
 	}
 
 	var allFields []types.GoField
+	var resourceKinds []string
 	for _, file := range files {
 		// Skip common CRDs (fieldexports, iamroleselectors) that aren't service resources
 		base := filepath.Base(file)
@@ -173,16 +183,20 @@ func (p *CRDParser) ParseAllCRDs(repoDir string) ([]types.GoField, error) {
 			continue
 		}
 
-		fields, _, err := p.ParseCRDFile(file)
+		fields, kind, err := p.ParseCRDFile(file)
 		if err != nil {
 			// Log warning but continue
 			fmt.Fprintf(os.Stderr, "Warning: failed to parse CRD %s: %v\n", base, err)
 			continue
 		}
+		if kind != "" {
+			resourceKinds = append(resourceKinds, kind)
+		}
 		allFields = append(allFields, fields...)
 	}
 
-	return allFields, nil
+	sort.Strings(resourceKinds)
+	return allFields, resourceKinds, nil
 }
 
 // jsonToCamel converts a JSON camelCase field name to Go CamelCase (exported).

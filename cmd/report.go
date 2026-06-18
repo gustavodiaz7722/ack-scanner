@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -18,8 +17,8 @@ import (
 	"github.com/aws-controllers-k8s/ack-scanner/pkg/types"
 )
 
-var reportServicesFilter string
 var reportGapsOnly bool
+var reportRefresh bool
 
 var reportCmd = &cobra.Command{
 	Use:   "report",
@@ -31,6 +30,10 @@ The report identifies Document_String_Fields missing is_document or is_iam_polic
 annotations, validated against Terraform AWS provider documentation. Fields are
 categorized as: gap confirmed by Terraform, gap without Terraform confirmation,
 already annotated, or Terraform-only.
+
+The report ALWAYS includes all ACK controllers in the aws-controllers-k8s org.
+For each controller, all CRD resources are listed. If a controller has no
+findings, an empty table is output for that controller.
 
 If no cached scan data exists, both scans are executed automatically.
 The default output format for the report command is markdown.`,
@@ -46,8 +49,8 @@ The default output format for the report command is markdown.`,
 }
 
 func init() {
-	reportCmd.Flags().StringVar(&reportServicesFilter, "services", "", "comma-separated list of service names to include in the report (default: all)")
 	reportCmd.Flags().BoolVar(&reportGapsOnly, "gaps-only", false, "only include Terraform-confirmed gaps in the report")
+	reportCmd.Flags().BoolVar(&reportRefresh, "refresh", false, "force fetch latest changes from remote repositories before scanning")
 	rootCmd.AddCommand(reportCmd)
 }
 
@@ -56,12 +59,12 @@ func runReport(cmd *cobra.Command, args []string) error {
 
 	start := time.Now()
 
-	// Step 1: Run the ACK scan.
+	// Step 1: Run the ACK scan (always includes all controllers).
 	if verbose {
 		fmt.Fprintln(os.Stderr, "Running ACK controller scan...")
 	}
 
-	ackResults, err := executeACKScan(ctx)
+	ackResults, controllerResources, err := executeACKScan(ctx, reportRefresh)
 	if err != nil {
 		return fmt.Errorf("ACK scan failed (%w) — no report generated", err)
 	}
@@ -71,7 +74,7 @@ func runReport(cmd *cobra.Command, args []string) error {
 		fmt.Fprintln(os.Stderr, "Running Terraform documentation scan...")
 	}
 
-	tfFields, err := executeTerraformScan(ctx)
+	tfFields, err := executeTerraformScan(ctx, reportRefresh)
 	if err != nil {
 		return fmt.Errorf("Terraform scan failed (%w) — no report generated", err)
 	}
@@ -84,13 +87,7 @@ func runReport(cmd *cobra.Command, args []string) error {
 	m := &matcher.Matcher{}
 	matchResults := m.Match(ackResults, tfFields)
 
-	// Step 4: Apply service filter if specified.
-	if reportServicesFilter != "" {
-		services := parseServicesList(reportServicesFilter)
-		matchResults = m.FilterByServices(matchResults, services)
-	}
-
-	// Step 5: Apply gaps-only filter if specified.
+	// Step 4: Apply gaps-only filter if specified.
 	if reportGapsOnly {
 		matchResults = filterGapsOnly(matchResults)
 	}
@@ -99,29 +96,35 @@ func runReport(cmd *cobra.Command, args []string) error {
 		fmt.Fprintf(os.Stderr, "Report generated in %s\n", time.Since(start).Round(time.Millisecond))
 	}
 
-	// Step 6: Generate report output.
+	// Step 5: Generate report output (includes all controllers with their resources).
 	rep := reporter.NewReporter(outputFormat)
-	return rep.GenerateReport(matchResults, os.Stdout)
+	return rep.GenerateReportWithResources(matchResults, controllerResources, os.Stdout)
 }
 
 // executeACKScan executes the full ACK controller scan pipeline and returns the
-// scan results. It discovers controllers, clones/fetches repos, parses CRDs
-// and generator configs, and classifies fields.
-func executeACKScan(ctx context.Context) ([]types.ScanResult, error) {
+// scan results along with a map of controller resources (from CRDs). It discovers
+// all controllers, clones/fetches repos, parses CRDs and generator configs, and
+// classifies fields. When refresh is true, it forces a git fetch to get latest changes.
+func executeACKScan(ctx context.Context, refresh bool) ([]types.ScanResult, map[string][]string, error) {
 	ghClient := GetGitHubClient(ctx)
 
 	disc := discovery.NewGitHubDiscoverer(ghClient, "aws-controllers-k8s")
 	controllers, err := disc.DiscoverControllers(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("discovering controllers (%w)", err)
+		return nil, nil, fmt.Errorf("discovering controllers (%w)", err)
 	}
 
 	repoCache := cache.NewRepoCache(cacheDir)
+	if refresh {
+		repoCache.SetForceRefresh(true)
+	}
 	crdParser := &parser.CRDParser{}
 	goParser := &parser.GoASTParser{}
 	genParser := &parser.GeneratorParser{}
 
 	var allResults []types.ScanResult
+	// Map of service name → list of resource kinds (from CRDs)
+	controllerResources := make(map[string][]string)
 
 	for _, ctrl := range controllers {
 		if verbose {
@@ -131,12 +134,13 @@ func executeACKScan(ctx context.Context) ([]types.ScanResult, error) {
 		repoDir, err := repoCache.EnsureRepo(ctx, "aws-controllers-k8s", ctrl.RepoName)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Warning: failed to clone/fetch %s: %v\n", ctrl.RepoName, err)
+			controllerResources[ctrl.ServiceName] = []string{}
 			continue
 		}
 
 		// Parse CRD YAML files for string fields under spec (preferred).
-		// Falls back to Go AST parsing if no CRDs found.
-		fields, err := crdParser.ParseAllCRDs(repoDir)
+		// Also extract the list of resource kinds for reporting.
+		fields, resourceKinds, err := crdParser.ParseAllCRDsWithResources(repoDir)
 		if err != nil {
 			if verbose {
 				fmt.Fprintf(os.Stderr, "    No CRDs found, falling back to types.go\n")
@@ -144,14 +148,19 @@ func executeACKScan(ctx context.Context) ([]types.ScanResult, error) {
 			typesFile, err := findTypesFile(repoDir)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Warning: %s — skipping %s\n", err.Error(), ctrl.RepoName)
+				controllerResources[ctrl.ServiceName] = []string{}
 				continue
 			}
 			fields, err = goParser.ParseTypesFile(typesFile)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Warning: failed to parse types.go in %s: %v\n", ctrl.RepoName, err)
+				controllerResources[ctrl.ServiceName] = []string{}
 				continue
 			}
+			resourceKinds = []string{}
 		}
+
+		controllerResources[ctrl.ServiceName] = resourceKinds
 
 		generatorPath := filepath.Join(repoDir, "generator.yaml")
 		genConfig, err := genParser.ParseGeneratorConfig(generatorPath)
@@ -166,13 +175,17 @@ func executeACKScan(ctx context.Context) ([]types.ScanResult, error) {
 		allResults = append(allResults, results...)
 	}
 
-	return allResults, nil
+	return allResults, controllerResources, nil
 }
 
 // executeTerraformScan executes the Terraform documentation scan pipeline and
-// returns the identified JSON-accepting fields.
-func executeTerraformScan(ctx context.Context) ([]types.TerraformField, error) {
+// returns the identified JSON-accepting fields. When refresh is true, it forces
+// a git fetch to get latest changes.
+func executeTerraformScan(ctx context.Context, refresh bool) ([]types.TerraformField, error) {
 	repoCache := cache.NewRepoCache(cacheDir)
+	if refresh {
+		repoCache.SetForceRefresh(true)
+	}
 
 	repoDir, err := repoCache.EnsureSparseRepo(ctx, "hashicorp", "terraform-provider-aws", []string{"website/docs/r/"})
 	if err != nil {
@@ -188,19 +201,6 @@ func executeTerraformScan(ctx context.Context) ([]types.TerraformField, error) {
 	}
 
 	return fields, nil
-}
-
-// parseServicesList splits a comma-separated services string into a trimmed slice.
-func parseServicesList(filter string) []string {
-	parts := strings.Split(filter, ",")
-	var services []string
-	for _, s := range parts {
-		trimmed := strings.TrimSpace(s)
-		if trimmed != "" {
-			services = append(services, trimmed)
-		}
-	}
-	return services
 }
 
 // filterGapsOnly returns only results with category gap_confirmed_by_terraform.

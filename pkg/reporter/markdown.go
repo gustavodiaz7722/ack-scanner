@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"sort"
+	"strings"
 
 	"github.com/aws-controllers-k8s/ack-scanner/pkg/types"
 )
@@ -12,6 +13,13 @@ import (
 // Gap fields (confirmed or unconfirmed) are highlighted with a ⚠️ prefix on the field name.
 // Within each service group, confirmed gaps sort before unconfirmed gaps.
 func formatReportMarkdown(results []types.MatchResult, summary types.ReportSummary, w io.Writer) error {
+	return formatReportMarkdownWithResources(results, summary, nil, w)
+}
+
+// formatReportMarkdownWithResources outputs the report as markdown with tables grouped
+// by service. ALL controllers in controllerResources are included — if a controller
+// has no findings, an empty table with its CRD resources listed is output.
+func formatReportMarkdownWithResources(results []types.MatchResult, summary types.ReportSummary, controllerResources map[string][]string, w io.Writer) error {
 	// Title
 	if _, err := fmt.Fprintf(w, "# ACK Scanner Gap Analysis Report\n\n"); err != nil {
 		return err
@@ -72,13 +80,64 @@ func formatReportMarkdown(results []types.MatchResult, summary types.ReportSumma
 	}
 
 	// Group results by service
-	serviceOrder, grouped := groupByService(results)
+	_, grouped := groupByService(results)
 
-	for _, svc := range serviceOrder {
-		svcResults := grouped[svc]
+	// Determine the full list of services to output.
+	// If controllerResources is provided, include only controllers that have CRD resources.
+	// Controllers without CRDs (empty or no resources) are excluded from the report.
+	var allServices []string
+	if controllerResources != nil {
+		serviceSet := make(map[string]bool)
+		for svc, resources := range controllerResources {
+			if len(resources) > 0 {
+				serviceSet[svc] = true
+			}
+		}
+		// Also include any services from results that have CRD resources
+		for svc := range grouped {
+			if resources, ok := controllerResources[svc]; ok && len(resources) > 0 {
+				serviceSet[svc] = true
+			}
+		}
+		for svc := range serviceSet {
+			allServices = append(allServices, svc)
+		}
+	} else {
+		for svc := range grouped {
+			allServices = append(allServices, svc)
+		}
+	}
+	sort.Strings(allServices)
+
+	for _, svc := range allServices {
 		if _, err := fmt.Fprintf(w, "## %s\n\n", svc); err != nil {
 			return err
 		}
+
+		// List CRD resources for this controller if available
+		if controllerResources != nil {
+			if resources, ok := controllerResources[svc]; ok && len(resources) > 0 {
+				if _, err := fmt.Fprintf(w, "**Resources:** %s\n\n", strings.Join(resources, ", ")); err != nil {
+					return err
+				}
+			}
+		}
+
+		svcResults := grouped[svc]
+		if len(svcResults) == 0 {
+			// Empty table for controllers with no findings
+			if _, err := fmt.Fprintf(w, "| Resource | Field | Annotation | TF Confirmed | Category |\n"); err != nil {
+				return err
+			}
+			if _, err := fmt.Fprintf(w, "| --- | --- | --- | --- | --- |\n"); err != nil {
+				return err
+			}
+			if _, err := fmt.Fprintf(w, "\n_No findings for this controller._\n\n"); err != nil {
+				return err
+			}
+			continue
+		}
+
 		if _, err := fmt.Fprintf(w, "| Resource | Field | Annotation | TF Confirmed | Category |\n"); err != nil {
 			return err
 		}

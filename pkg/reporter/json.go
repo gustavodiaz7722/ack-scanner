@@ -76,3 +76,47 @@ func formatControllerListJSON(repos []types.ControllerRepo, w io.Writer) error {
 	_, err = w.Write([]byte("\n"))
 	return err
 }
+
+// reportJSONWithResources is the top-level JSON output structure including
+// controller resource information for all controllers.
+type reportJSONWithResources struct {
+	Fields              []types.MatchResult `json:"fields"`
+	Summary             types.ReportSummary `json:"summary"`
+	ControllerResources map[string][]string `json:"controller_resources"`
+}
+
+// formatReportJSONWithResources outputs the report as JSON including the
+// controller resources map for all controllers.
+func formatReportJSONWithResources(results []types.MatchResult, summary types.ReportSummary, controllerResources map[string][]string, w io.Writer) error {
+	report := reportJSONWithResources{
+		Fields:              results,
+		Summary:             summary,
+		ControllerResources: controllerResources,
+	}
+
+	// Ensure empty slices serialize as [] not null
+	if report.Fields == nil {
+		report.Fields = []types.MatchResult{}
+	}
+	if report.Summary.ServicesByPriority == nil {
+		report.Summary.ServicesByPriority = []types.ServicePriority{}
+	}
+	if report.Summary.GapsPerService == nil {
+		report.Summary.GapsPerService = make(map[string]int)
+	}
+	if report.ControllerResources == nil {
+		report.ControllerResources = make(map[string][]string)
+	}
+
+	data, err := json.MarshalIndent(report, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	_, err = w.Write(data)
+	if err != nil {
+		return err
+	}
+	_, err = w.Write([]byte("\n"))
+	return err
+}

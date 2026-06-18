@@ -38,6 +38,26 @@ func (r *Reporter) GenerateReport(results []types.MatchResult, w io.Writer) erro
 	}
 }
 
+// GenerateReportWithResources creates a gap analysis report that includes ALL
+// controllers with their CRD resources listed. Controllers with no findings
+// get an empty table in the output. The controllerResources map provides the
+// list of CRD resource kinds per service name.
+func (r *Reporter) GenerateReportWithResources(results []types.MatchResult, controllerResources map[string][]string, w io.Writer) error {
+	sorted := sortResults(results)
+	summary := GenerateSummary(sorted)
+
+	switch r.format {
+	case "json":
+		return formatReportJSONWithResources(sorted, summary, controllerResources, w)
+	case "table":
+		return formatReportTableWithResources(sorted, summary, controllerResources, w)
+	case "markdown":
+		return formatReportMarkdownWithResources(sorted, summary, controllerResources, w)
+	default:
+		return fmt.Errorf("unsupported output format: %s", r.format)
+	}
+}
+
 // FormatControllerList outputs the controller list in the specified format.
 // Controllers are sorted alphabetically by service name before formatting.
 func (r *Reporter) FormatControllerList(repos []types.ControllerRepo, w io.Writer) error {

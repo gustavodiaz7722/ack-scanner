@@ -5,8 +5,8 @@
 | Metric | Count |
 | --- | --- |
 | Total Fields | 187 |
-| Already Annotated | 10 |
-| Gaps (Terraform Confirmed) | 41 |
+| Already Annotated | 20 |
+| Gaps (Terraform Confirmed) | 31 |
 | Gaps (Unconfirmed) | 0 |
 | Terraform Only | 136 |
 
@@ -15,29 +15,48 @@
 | Service | Confirmed Gaps |
 | --- | --- |
 | sagemaker | 10 |
-| sns | 6 |
-| ecr | 4 |
+| sns | 4 |
 | dms | 3 |
 | pipes | 3 |
 | cloudwatch | 2 |
 | lambda | 2 |
-| sqs | 2 |
-| ssm | 2 |
 | apigatewayv2 | 1 |
 | ecs | 1 |
 | efs | 1 |
-| iam | 1 |
 | kms | 1 |
 | opensearchserverless | 1 |
 | ram | 1 |
+| ssm | 1 |
+
+## acm
+
+**Resources:** Certificate
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
 
 ## acmpca
+
+**Resources:** Certificate, CertificateAuthority, CertificateAuthorityActivation
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | policy | policy | none | N/A | Terraform Only |
 
+## apigateway
+
+**Resources:** APIIntegrationResponse, APIKey, APIMethodResponse, Authorizer, Deployment, Integration, Method, Resource, RestAPI, Stage, VPCLink
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## apigatewayv2
+
+**Resources:** API, APIMapping, Authorizer, Deployment, DomainName, Integration, Route, Stage, VPCLink
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -45,7 +64,27 @@
 | model | content_type | none | N/A | Terraform Only |
 | model | schema | none | N/A | Terraform Only |
 
+## applicationautoscaling
+
+**Resources:** ScalableTarget, ScalingPolicy
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## athena
+
+**Resources:** PreparedStatement, WorkGroup
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## autoscaling
+
+**Resources:** AutoScalingGroup
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -54,12 +93,25 @@
 
 ## backup
 
+**Resources:** BackupPlan, BackupSelection, BackupVault
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | report_plan | formats | none | N/A | Terraform Only |
 | vault_policy | policy | none | N/A | Terraform Only |
 
+## bedrock
+
+**Resources:** InferenceProfile
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## bedrockagent
+
+**Resources:** Agent
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -68,7 +120,36 @@
 | prompt | json | none | N/A | Terraform Only |
 | agent_action_group | payload | none | N/A | Terraform Only |
 
+## bedrockagentcorecontrol
+
+**Resources:** APIKeyCredentialProvider, AgentRuntime, AgentRuntimeEndpoint, Browser, BrowserProfile, CodeInterpreter, Gateway, GatewayTarget, Memory, WorkloadIdentity
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## cloudfront
+
+**Resources:** CachePolicy, Distribution, Function, OriginAccessControl, OriginRequestPolicy, ResponseHeadersPolicy, VPCOrigin
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## cloudtrail
+
+**Resources:** EventDataStore, Trail
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## cloudwatch
+
+**Resources:** Dashboard, MetricAlarm, MetricStream
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -98,14 +179,36 @@
 | metric_stream | statistics_configuration | none | N/A | Terraform Only |
 | log_transformer | target | none | N/A | Terraform Only |
 
+## cloudwatchlogs
+
+**Resources:** LogGroup
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## codeartifact
+
+**Resources:** Domain, PackageGroup
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | domain_permissions_policy | policy_document | none | N/A | Terraform Only |
 | repository_permissions_policy | policy_document | none | N/A | Terraform Only |
 
+## cognitoidentityprovider
+
+**Resources:** UserPool
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## dms
+
+**Resources:** Certificate, Endpoint, ReplicationSubnetGroup
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -118,7 +221,18 @@
 | replication_config | table_mappings | none | N/A | Terraform Only |
 | replication_task | table_mappings | none | N/A | Terraform Only |
 
+## documentdb
+
+**Resources:** DBCluster, DBInstance, DBSubnetGroup
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## dsql
+
+**Resources:** Cluster
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -126,28 +240,45 @@
 
 ## dynamodb
 
+**Resources:** Backup, GlobalTable, Table
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | table_item | item | none | N/A | Terraform Only |
 | resource_policy | policy | none | N/A | Terraform Only |
 | resource_policy | resource_arn | none | N/A | Terraform Only |
 
-## ecr
+## ec2
+
+**Resources:** CapacityReservation, DHCPOptions, EgressOnlyInternetGateway, ElasticIPAddress, FlowLog, Instance, InternetGateway, LaunchTemplate, ManagedPrefixList, NATGateway, NetworkACL, RouteTable, SecurityGroup, Subnet, TransitGateway, TransitGatewayVPCAttachment, VPC, VPCEndpoint, VPCEndpointServiceConfiguration, VPCPeeringConnection
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| Repository | ⚠️ LifecyclePolicy | none | Yes | Gap (Confirmed) |
-| RepositoryCreationTemplate | ⚠️ LifecyclePolicy | none | Yes | Gap (Confirmed) |
-| Repository | ⚠️ Policy | none | Yes | Gap (Confirmed) |
-| RepositoryCreationTemplate | ⚠️ RepositoryPolicy | none | Yes | Gap (Confirmed) |
+
+_No findings for this controller._
+
+## ecr
+
+**Resources:** PullThroughCacheRule, Repository, RepositoryCreationTemplate
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+| Repository | LifecyclePolicy | is_document | N/A | Annotated |
+| RepositoryCreationTemplate | LifecyclePolicy | is_document | N/A | Annotated |
+| Repository | Policy | is_iam_policy | N/A | Annotated |
+| RepositoryCreationTemplate | RepositoryPolicy | is_iam_policy | N/A | Annotated |
 
 ## ecrpublic
+
+**Resources:** Repository
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | repository_policy | policy | none | N/A | Terraform Only |
 
 ## ecs
+
+**Resources:** CapacityProvider, Cluster, Service, TaskDefinition
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -157,18 +288,78 @@
 
 ## efs
 
+**Resources:** AccessPoint, FileSystem, MountTarget
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | FileSystem | ⚠️ Policy | none | Yes | Gap (Confirmed) |
 
 ## eks
 
+**Resources:** AccessEntry, Addon, Capability, Cluster, FargateProfile, IdentityProviderConfig, Nodegroup, PodIdentityAssociation
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | Addon | ConfigurationValues | is_document | N/A | Annotated |
 | PodIdentityAssociation | Policy | is_iam_policy | N/A | Annotated |
 
+## elasticache
+
+**Resources:** CacheCluster, CacheParameterGroup, CacheSubnetGroup, ReplicationGroup, ServerlessCache, ServerlessCacheSnapshot, Snapshot, User, UserGroup
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## elbv2
+
+**Resources:** Listener, LoadBalancer, Rule, TargetGroup
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## emrcontainers
+
+**Resources:** JobRun, VirtualCluster
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## emrserverless
+
+**Resources:** Application
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## eventbridge
+
+**Resources:** Archive, Endpoint, EventBus, Rule
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## firehose
+
+**Resources:** DeliveryStream
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## glue
+
+**Resources:** Job
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -185,12 +376,34 @@
 
 ## iam
 
+**Resources:** Group, InstanceProfile, OpenIDConnectProvider, Policy, Role, ServiceLinkedRole, User
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| Policy | ⚠️ PolicyDocument | none | Yes | Gap (Confirmed) |
 | Role | AssumeRolePolicyDocument | is_iam_policy | N/A | Annotated |
+| Policy | PolicyDocument | is_iam_policy | N/A | Annotated |
+
+## kafka
+
+**Resources:** Cluster, Configuration, ServerlessCluster
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## keyspaces
+
+**Resources:** Keyspace, Table
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
 
 ## kinesis
+
+**Resources:** Stream
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -211,11 +424,15 @@
 
 ## kms
 
+**Resources:** Alias, Grant, Key
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | Key | ⚠️ Policy | none | Yes | Gap (Confirmed) |
 
 ## lambda
+
+**Resources:** Alias, CodeSigningConfig, EventSourceMapping, Function, FunctionURLConfig, LayerVersion, Version
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -226,13 +443,44 @@
 | event_source_mapping | pattern | none | N/A | Terraform Only |
 | invocation | terraform_key | none | N/A | Terraform Only |
 
+## memorydb
+
+**Resources:** ACL, Cluster, ParameterGroup, Snapshot, SubnetGroup, User
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## mq
+
+**Resources:** Broker
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
+## mwaa
+
+**Resources:** Environment
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## networkfirewall
+
+**Resources:** Firewall, FirewallPolicy, RuleGroup
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | resource_policy | policy | none | N/A | Terraform Only |
 
 ## networkmanager
+
+**Resources:** GlobalNetwork
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -241,11 +489,15 @@
 
 ## opensearchserverless
 
+**Resources:** Collection, SecurityPolicy
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | SecurityPolicy | ⚠️ Policy | none | Yes | Gap (Confirmed) |
 
 ## opensearchservice
+
+**Resources:** Domain
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -253,12 +505,16 @@
 
 ## organizations
 
+**Resources:** Account, OrganizationalUnit
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | policy | content | none | N/A | Terraform Only |
 | resource_policy | content | none | N/A | Terraform Only |
 
 ## pipes
+
+**Resources:** Pipe
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -268,7 +524,18 @@
 | pipe | output_format | none | N/A | Terraform Only |
 | pipe | pattern | none | N/A | Terraform Only |
 
+## prometheusservice
+
+**Resources:** AlertManagerDefinition, LoggingConfiguration, RuleGroupsNamespace, Workspace
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## quicksight
+
+**Resources:** Analysis, Dashboard, DataSet, DataSource
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -276,24 +543,50 @@
 
 ## ram
 
+**Resources:** Permission, ResourceShare
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | Permission | ⚠️ PolicyTemplate | none | Yes | Gap (Confirmed) |
 
 ## rds
 
+**Resources:** DBCluster, DBClusterEndpoint, DBClusterParameterGroup, DBClusterSnapshot, DBInstance, DBParameterGroup, DBProxy, DBSnapshot, DBSubnetGroup, GlobalCluster
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | custom_db_engine_version | manifest | none | N/A | Terraform Only |
 | custom_db_engine_version | manifest_hash | none | N/A | Terraform Only |
 
+## recyclebin
+
+**Resources:** Rule
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## route53
+
+**Resources:** HealthCheck, HostedZone, RecordSet
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | traffic_policy | document | none | N/A | Terraform Only |
 
+## route53resolver
+
+**Resources:** ResolverEndpoint, ResolverQueryLogConfig, ResolverRule, ResolverRuleAssociation
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
+
+_No findings for this controller._
+
 ## s3
+
+**Resources:** Bucket
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -303,6 +596,8 @@
 | object_copy | source | none | N/A | Terraform Only |
 
 ## s3control
+
+**Resources:** AccessPoint
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -315,11 +610,15 @@
 
 ## s3files
 
+**Resources:** AccessPoint, FileSystem, MountTarget
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | FileSystem | Policy | is_iam_policy | N/A | Annotated |
 
 ## s3tables
+
+**Resources:** Namespace, TableBucket
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -327,6 +626,8 @@
 | table_policy | resource_policy | none | N/A | Terraform Only |
 
 ## sagemaker
+
+**Resources:** App, DataQualityJobDefinition, Domain, Endpoint, EndpointConfig, FeatureGroup, HyperParameterTuningJob, InferenceComponent, LabelingJob, Model, ModelBiasJobDefinition, ModelExplainabilityJobDefinition, ModelPackage, ModelPackageGroup, ModelQualityJobDefinition, MonitoringSchedule, NotebookInstance, NotebookInstanceLifecycleConfig, Pipeline, PipelineExecution, ProcessingJob, Project, Space, TrainingJob, TransformJob, UserProfile
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
@@ -353,6 +654,8 @@
 
 ## secretsmanager
 
+**Resources:** Secret
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | secret | policy | none | N/A | Terraform Only |
@@ -361,41 +664,60 @@
 
 ## ses
 
+**Resources:** ConfigurationSet
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
 | identity_policy | policy | none | N/A | Terraform Only |
 
-## sns
+## sfn
+
+**Resources:** Activity, StateMachine, StateMachineAlias
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| Subscription | ⚠️ DeliveryPolicy | none | Yes | Gap (Confirmed) |
+
+_No findings for this controller._
+
+## sns
+
+**Resources:** PlatformApplication, PlatformEndpoint, Subscription, Topic
+
+| Resource | Field | Annotation | TF Confirmed | Category |
+| --- | --- | --- | --- | --- |
 | Topic | ⚠️ DeliveryPolicy | none | Yes | Gap (Confirmed) |
 | Subscription | ⚠️ FilterPolicyScope | none | Yes | Gap (Confirmed) |
 | Subscription | ⚠️ Protocol | none | Yes | Gap (Confirmed) |
 | Subscription | ⚠️ RawMessageDelivery | none | Yes | Gap (Confirmed) |
-| Subscription | ⚠️ RedrivePolicy | none | Yes | Gap (Confirmed) |
+| Subscription | DeliveryPolicy | is_document | N/A | Annotated |
 | Subscription | FilterPolicy | is_document | N/A | Annotated |
 | Topic | Policy | is_iam_policy | N/A | Annotated |
+| Subscription | RedrivePolicy | is_document | N/A | Annotated |
 | topic_subscription | replay_policy | none | N/A | Terraform Only |
 
 ## sqs
 
+**Resources:** Queue
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| Queue | ⚠️ RedriveAllowPolicy | none | Yes | Gap (Confirmed) |
-| Queue | ⚠️ RedrivePolicy | none | Yes | Gap (Confirmed) |
 | Queue | Policy | is_iam_policy | N/A | Annotated |
+| Queue | RedriveAllowPolicy | is_document | N/A | Annotated |
+| Queue | RedrivePolicy | is_document | N/A | Annotated |
 
 ## ssm
 
+**Resources:** Document, Parameter, PatchBaseline, ResourceDataSync
+
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |
-| Document | ⚠️ Content | none | Yes | Gap (Confirmed) |
 | ResourceDataSync | ⚠️ SyncFormat | none | Yes | Gap (Confirmed) |
+| Document | Content | is_document | N/A | Annotated |
 | maintenance_window_task | payload | none | N/A | Terraform Only |
 
 ## wafv2
+
+**Resources:** IPSet, RuleGroup, WebACL
 
 | Resource | Field | Annotation | TF Confirmed | Category |
 | --- | --- | --- | --- | --- |

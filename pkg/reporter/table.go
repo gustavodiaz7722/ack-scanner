@@ -64,3 +64,12 @@ func formatControllerListTable(repos []types.ControllerRepo, w io.Writer) error 
 
 	return table.Render()
 }
+
+// formatReportTableWithResources outputs the report as a table, including all
+// controllers. For now, delegates to formatReportTable (table format doesn't
+// easily show empty controllers inline).
+func formatReportTableWithResources(results []types.MatchResult, summary types.ReportSummary, controllerResources map[string][]string, w io.Writer) error {
+	// For table format, just output results as before. The table format
+	// doesn't lend itself well to showing empty controllers.
+	return formatReportTable(results, summary, w)
+}

@@ -34,6 +34,49 @@ var jsonPhrases = []string{
 	"json",
 }
 
+// terraformIgnoreEntry represents a known false positive in Terraform docs that
+// should be excluded from scan results.
+type terraformIgnoreEntry struct {
+	Service  string // e.g., "apigatewayv2"
+	Resource string // e.g., "authorizer" (from filename: apigatewayv2_authorizer.html.markdown)
+	Field    string // e.g., "issuer"
+	Reason   string // human-readable explanation
+}
+
+// terraformFalsePositives is the static list of known false positives to exclude
+// from Terraform scan results. These are fields where Terraform's docs mention
+// "JSON" in the description or use jsonencode in examples, but the field is NOT
+// actually a JSON document in the AWS API.
+//
+// Add entries here as they are confirmed to be false positives.
+// All values are matched case-insensitively.
+var terraformFalsePositives = []terraformIgnoreEntry{
+	{
+		Service:  "apigatewayv2",
+		Resource: "authorizer",
+		Field:    "issuer",
+		Reason:   "Issuer is a JWT issuer URL string, not a JSON document. Terraform description mentions 'JSON Web Token' which triggers phrase match.",
+	},
+}
+
+// tfIgnoreLookup is built from terraformFalsePositives for O(1) lookup.
+var tfIgnoreLookup map[string]bool
+
+func init() {
+	tfIgnoreLookup = make(map[string]bool, len(terraformFalsePositives))
+	for _, fp := range terraformFalsePositives {
+		key := strings.ToLower(fp.Service) + "/" + strings.ToLower(fp.Resource) + "/" + strings.ToLower(fp.Field)
+		tfIgnoreLookup[key] = true
+	}
+}
+
+// isTerraformIgnored returns true if a (service, resource, field) combination
+// is a known false positive that should be excluded from Terraform scan results.
+func isTerraformIgnored(service, resource, field string) bool {
+	key := strings.ToLower(service) + "/" + strings.ToLower(resource) + "/" + strings.ToLower(field)
+	return tfIgnoreLookup[key]
+}
+
 // argPattern matches lines like: * `field_name` - (Required) description...
 // or: * `field_name` - (Optional) description...
 var argPattern = regexp.MustCompile("^\\*\\s+`([^`]+)`\\s+-\\s+\\((Required|Optional)\\)\\s+(.*)")
@@ -257,6 +300,10 @@ func (p *TerraformParser) ParseResourceDoc(filePath string) ([]types.TerraformFi
 
 	results := make([]types.TerraformField, 0, len(fieldMap))
 	for _, field := range fieldMap {
+		// Skip known false positives
+		if isTerraformIgnored(field.ServiceName, field.ResourceType, field.FieldName) {
+			continue
+		}
 		results = append(results, *field)
 	}
 	return results, nil

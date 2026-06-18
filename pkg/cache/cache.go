@@ -12,12 +12,19 @@ import (
 
 // RepoCache manages local clones of git repositories.
 type RepoCache struct {
-	baseDir string
+	baseDir      string
+	forceRefresh bool
 }
 
 // NewRepoCache creates a new RepoCache that stores clones under baseDir.
 func NewRepoCache(baseDir string) *RepoCache {
 	return &RepoCache{baseDir: baseDir}
+}
+
+// SetForceRefresh enables force-refresh mode, which always fetches latest
+// changes from remote even if a local clone already exists.
+func (c *RepoCache) SetForceRefresh(refresh bool) {
+	c.forceRefresh = refresh
 }
 
 // EnsureRepo clones or fetches a repository, returning the local path.
